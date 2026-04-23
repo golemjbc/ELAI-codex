@@ -12,113 +12,130 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
 
+html {
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-/* ===========================
-   đźŚŠ Animated Gradient Background
-=========================== */
 body {
   margin: 0;
-  background: linear-gradient(
-    120deg,
-    #0f172a,
-    #1e1b4b,
-    #111827,
-    #1e293b
-  );
-  background-size: 300% 300%;
-  animation: gradientMove 18s ease infinite;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.12), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgba(59,130,246,0.10), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(148,163,184,0.10), transparent 28%),
+    linear-gradient(180deg, #0a0f18 0%, #0f1624 45%, #111827 100%);
+  background-attachment: fixed;
+  color: #edf2ff;
   overflow-x: hidden;
-  /*padding-bottom: 140px; /* prostor pro floating input */
+  position: relative;
 }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* ===========================
-   đź§Š Vision Glass Ultra
-=========================== */
+body::before {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.07), transparent 18%),
+    radial-gradient(circle at 70% 15%, rgba(96,165,250,0.06), transparent 22%),
+    radial-gradient(circle at 50% 70%, rgba(255,255,255,0.04), transparent 25%);
+  filter: blur(12px);
+}
+
+body::after {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 25%, transparent 82%);
+  opacity: 0.35;
+}
+
 .glass {
   position: relative;
-  background: rgba(255,255,255,0.04); /* velmi jemnĂ© */
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 26px;
-
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+    rgba(15, 23, 42, 0.52);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 28px;
+  backdrop-filter: blur(28px) saturate(1.35);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
   box-shadow:
-    0 30px 80px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.35),
-    inset 0 -1px 0 rgba(255,255,255,0.1);
-
+    0 24px 70px rgba(0,0,0,0.34),
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 -1px 0 rgba(255,255,255,0.08);
   overflow: hidden;
 }
 
 .glass::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 1px;
   background: radial-gradient(
-    circle at 30% 20%,
-    rgba(255,255,255,0.18),
-    transparent 60%
+    circle at 28% 18%,
+    rgba(255,255,255,0.26),
+    transparent 42%
   );
   pointer-events: none;
+  opacity: 0.85;
 }
 
-
-/* ===========================
-   đź«§ Timeline
-=========================== */
 .timeline-wrapper {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   overflow-x: auto;
-  overflow-y: visible;   /* đź‘ dĹŻleĹľitĂ© */
+  overflow-y: visible;
   scroll-snap-type: x proximity;
-  padding: 0 24px;
-  gap: 12px;
-  margin-top: 6px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 16px 20px 10px;
+  gap: 10px;
+  margin-top: 2px;
 }
-
-
 
 .timeline-bubble {
   scroll-snap-align: center;
-  padding: 10px 18px;
-  border-radius: 24px;
-  min-width: 130px;
-
+  padding: 11px 18px;
+  border-radius: 999px;
+  min-width: 142px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.15);
-
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.08)),
+    rgba(15,23,42,0.42);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-
+    0 16px 40px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.32);
   transition: transform 0.25s ease, opacity 0.25s ease;
   transform-origin: center;
-  opacity: 0.4;
+  opacity: 0.45;
 }
 
 .timeline-bubble-date {
   font-size: 10px;
-  opacity: 0.7;
+  opacity: 0.62;
+  letter-spacing: 0.02em;
 }
 
 .timeline-bubble-meal {
   font-size: 13px;
-  font-weight: 500;
-  margin-top: 3px;
+  font-weight: 600;
+  margin-top: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -127,13 +144,10 @@ body {
 
 .timeline-bubble.today {
   box-shadow:
-    0 0 120px rgba(139,92,246,0.8),
-    0 30px 80px rgba(0,0,0,0.7);
+    0 0 0 1px rgba(255,255,255,0.22),
+    0 20px 55px rgba(0,0,0,0.28);
 }
 
-/* ===========================
-   đź’Ž FLOATING INPUT
-=========================== */
 .input-wrapper {
   position: fixed;
   bottom: 16px;
@@ -141,34 +155,34 @@ body {
   transform: translateX(-50%);
   width: 94%;
   max-width: 520px;
-
   display: flex;
   align-items: center;
   gap: 8px;
-
-  background: rgba(20,20,35,0.85);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 40px;
-
-  padding: 6px 8px;
-  
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06)),
+    rgba(17,24,39,0.62);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 999px;
+  backdrop-filter: blur(28px) saturate(1.35);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
+  padding: 8px 10px;
   box-shadow:
-    0 15px 40px rgba(0,0,0,0.6);
+    0 18px 50px rgba(0,0,0,0.32);
 }
 
+.input-wrapper input::placeholder {
+  color: rgba(226,232,240,0.58);
+}
 
-/* ===========================
-   âś¨ Scrollbar
-=========================== */
 #chatSection::-webkit-scrollbar {
   width: 4px;
 }
+
 #chatSection::-webkit-scrollbar-thumb {
-  background: rgba(139,92,246,0.4);
+  background: rgba(148,163,184,0.35);
   border-radius: 10px;
 }
 
-/* Hide horizontal scrollbar for timeline */
 .timeline-wrapper::-webkit-scrollbar {
   display: none;
 }
@@ -181,21 +195,35 @@ body {
 .user-bubble {
   position: relative;
   box-shadow:
-    0 25px 70px rgba(99,102,241,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.4),
-    inset 0 -1px 0 rgba(0,0,0,0.2);
+    0 18px 48px rgba(37,99,235,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.38),
+    inset 0 -1px 0 rgba(0,0,0,0.12);
 }
 
+#chatSection {
+  position: relative;
+  z-index: 1;
+}
 
+.timeline-wrapper,
+.input-wrapper,
+header {
+  position: relative;
+  z-index: 1;
+}
+
+header img {
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.28));
+}
 </style>
 </head>
 
-<body class="flex flex-col h-screen text-zinc-200 overflow-hidden">
+<body class="flex flex-col h-screen text-slate-100 overflow-hidden">
 
 <!-- LOGO -->
 <header class="w-full flex justify-center leading-none pt-2">
   <img src="img/ELAI.png"
-     class="block max-w-[160px] w-full h-auto object-contain opacity-95 m-0 p-0" />
+     class="block max-w-[168px] w-full h-auto object-contain opacity-95 m-0 p-0" />
 </header>
 
 
@@ -205,7 +233,7 @@ body {
 
 <!-- CHAT -->
 <div id="chatSection"
-     class="flex-1 overflow-y-auto px-6 pt-4 space-y-6 max-w-2xl mx-auto"
+     class="flex-1 overflow-y-auto px-4 sm:px-6 pt-4 space-y-5 max-w-2xl mx-auto"
      style="padding-bottom: 140px;">
 </div>
 
@@ -216,15 +244,13 @@ body {
   <input id="messageInput"
          type="text"
          placeholder="Tak co mi dneska naservĂ­rujeĹˇ?"
-         class="flex-1 bg-transparent text-zinc-200 px-12 py-2 text-sm focus:outline-none" />
+         class="flex-1 bg-transparent text-slate-100 px-6 py-3 text-[15px] focus:outline-none" />
 
     <button id="sendButton" onclick="sendMessage()"
-            class="w-10 h-10 flex items-center justify-center rounded-full 
-                  bg-gradient-to-br from-violet-500 to-indigo-500 
-                  text-white shadow-md hover:scale-105 transition">
+            class="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-md hover:scale-105 transition">
 
       <svg xmlns="http://www.w3.org/2000/svg" 
-          class="w-4 h-4"
+          class="w-[18px] h-[18px]"
           viewBox="0 0 24 24" 
           fill="currentColor">
         <path d="M3 20v-6l15-2-15-2V4l19 8-19 8z"/>
@@ -236,11 +262,11 @@ body {
 
 <script>
 console.log("ELAI build:", new Date().toISOString());
-const APP_VERSION = "v1.35";
+const APP_VERSION = "v1.36";
 
 
 /* ===========================
-   đźŽĄ 3D TILT SYSTEM
+   Ă„â€ÄąĹźÄąËťĂ„â€ž 3D TILT SYSTEM
 =========================== */
 
 function applyTilt(element) {
@@ -249,8 +275,8 @@ function applyTilt(element) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const rotateX = ((y / rect.height) - 0.5) * -6;
-    const rotateY = ((x / rect.width) - 0.5) * 6;
+    const rotateX = ((y / rect.height) - 0.5) * -2.5;
+    const rotateY = ((x / rect.width) - 0.5) * 2.5;
 
     element.style.transform =
       `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -266,31 +292,19 @@ function applyTilt(element) {
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
 
-/* PĹ®VODNĂŤ FUNKCE JSOU ZACHOVĂNY POD TĂŤMTO ĹĂDKEM */
+/* PĂ„Ä…Ă‚Â®VODNĂ„â€šÄąÂ¤ FUNKCE JSOU ZACHOVĂ„â€šĂ‚ÂNY POD TĂ„â€šÄąÂ¤MTO Ă„Ä…Ă‚ÂĂ„â€šĂ‚ÂDKEM */
 
 
 
 const loadingMessages = [
-"ZvyĹˇuju tlak. UdrĹľĂ­Ĺˇ to?",
-"Teplota roste. A jĂˇ to miluju.",
-"JeĹˇtÄ› chvĂ­liâ€¦ a praskne to.",
-"DusĂ­m tÄ› napÄ›tĂ­m.",
-"DrĹľ se. Bude to intenzivnĂ­.",
-"Tlak stoupĂˇ. VĂ˝sledek bude vĂ˝buĹˇnĂ˝.",
-"VaĹ™Ă­m to tak dlouho, aĹľ to pĹ™eteÄŤe.",
-"MĂ­chĂˇm to tvrdÄ›. A bez slitovĂˇnĂ­.",
-"CĂ­tĂ­Ĺˇ to napÄ›tĂ­?",
-"JeĹˇtÄ› pĂˇr vteĹ™inâ€¦ a exploduje to.",
-"ZahĹ™Ă­vĂˇm to na hranici Ăşnosnosti.",
-"Trochu vlhka nikdy neuĹˇkodĂ­.",
-"PĹ™iprav se. Bude to silnĂ©.",
-"NapĂ­nĂˇm tÄ› schvĂˇlnÄ›.",
-"Hraju si s tlakem, dokud to nevystĹ™elĂ­.",
-"DusĂ­m tÄ› pomalu. ProtoĹľe mĹŻĹľu.",
-"JeĹˇtÄ› vĂ­c teplaâ€¦ jeĹˇtÄ› vĂ­c napÄ›tĂ­.",
-"BlĂ­ĹľĂ­m se k vrcholu vĂ˝poÄŤtu.",
-"Tohle bude mĂ­t nĂˇboj.",
-"ChceĹˇ to rychle? SmĹŻla."
+"ChvĂ­li to ladĂ­m.",
+"DoladĂ­m detaily.",
+"HladĂ­m to do finĂˇle.",
+"JeĹˇtÄ› malĂ˝ moment.",
+"ZpracovĂˇvĂˇm to jemnÄ›.",
+"TĂ©mÄ›Ĺ™ hotovo.",
+"Jen to uhladĂ­m.",
+"Brzy to bude pĹ™ipravenĂ©."
 ];
 
 let loadingBubble = null;
@@ -365,8 +379,8 @@ function renderHistory(items) {
     }
   });
 
-  // đź”Ą --- TADY JE JEDINĂ PĹIDANĂ VÄšC ---
-  // spacer bublina na zĂ­tĹ™ek
+  // Ă„â€ÄąĹźĂ˘â‚¬ĹĄĂ„â€ž --- TADY JE JEDINĂ„â€šĂ‚Â PĂ„Ä…Ă‚ÂIDANĂ„â€šĂ‚Â VÄ‚â€žÄąË‡C ---
+  // spacer bublina na zĂ„â€šĂ‚Â­tĂ„Ä…Ă˘â€žËek
 
   const spacer = document.createElement("div");
   spacer.className = "timeline-bubble";
@@ -381,7 +395,7 @@ function renderHistory(items) {
 
   const spacerMeal = document.createElement("div");
   spacerMeal.className = "timeline-bubble-meal";
-  spacerMeal.innerText = "TÄ›Ĺˇ se!";
+  spacerMeal.innerText = "TÄ‚â€žĂ˘â‚¬ĹźĂ„Ä…Ă‹â€ˇ se!";
 
   spacer.appendChild(spacerDate);
   spacer.appendChild(spacerMeal);
@@ -421,7 +435,7 @@ function updateTimelineScale(container) {
   });
 }
 
-/* SESSION + CHAT (nezmÄ›nÄ›no) */
+/* SESSION + CHAT (nezmÄ‚â€žĂ˘â‚¬ĹźnÄ‚â€žĂ˘â‚¬Ĺźno) */
 async function loadSession() {
   try {
     const res = await fetch(`${API_BASE}/session`);
@@ -451,8 +465,7 @@ function appendMessage(role, content) {
 
   const bubble = document.createElement("div");
   bubble.className = `${
-    role === "assistant" ? "tilt glass text-zinc-200" : 
-    "bg-gradient-to-br from-violet-500 to-indigo-600 text-white border border-white/20 shadow-[0_25px_70px_rgba(99,102,241,0.6)]"
+    role === "assistant" ? "tilt glass text-slate-100" : "bg-gradient-to-br from-sky-500/95 to-blue-600/95 text-white border border-white/20 shadow-[0_18px_48px_rgba(37,99,235,0.22)]"
   }
     max-w-[70%] px-5 py-3 rounded-3xl
     animate-[fadeIn_0.3s_ease]
@@ -484,7 +497,7 @@ function setComposerDisabled(disabled) {
   }
 }
 
-/* LOADING (zachovĂˇno celĂ©) */
+/* LOADING (zachovĂ„â€šĂ‹â€ˇno celĂ„â€šĂ‚Â©) */
 function showLoading() {
   const chat = document.getElementById("chatSection");
 
@@ -492,7 +505,7 @@ function showLoading() {
   loadingBubble.className = "flex justify-start";
 
   const bubbleInner = document.createElement("div");
-  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-zinc-300";
+  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-slate-200";
 
   bubbleInner.innerText =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
@@ -513,7 +526,7 @@ function hideLoading() {
   loadingBubble = null;
 }
 
-/* SEND (zachovĂˇno) */
+/* SEND (zachovĂ„â€šĂ‹â€ˇno) */
 async function sendMessage() {
   const input = document.getElementById("messageInput");
   const message = input.value.trim();
@@ -538,13 +551,13 @@ async function sendMessage() {
     }
 
     const data = await res.json();
-    appendMessage("assistant", data.reply || "Backend vrĂˇtil prĂˇzdnou odpovÄ›ÄŹ.");
+    appendMessage("assistant", data.reply || "Backend vrĂ„â€šĂ‹â€ˇtil prĂ„â€šĂ‹â€ˇzdnou odpovÄ‚â€žĂ˘â‚¬ĹźÄ‚â€žÄąÄ….");
     await loadHistory();
     setTimeout(scrollChatToBottom, 50);
 
   } catch (err) {
     console.error("sendMessage failed:", err);
-    appendMessage("assistant", "Backend teÄŹ neodpovĂ­dĂˇ. Zkus to prosĂ­m znovu za chvĂ­li.");
+    appendMessage("assistant", "Backend teÄ‚â€žÄąÄ… neodpovĂ„â€šĂ‚Â­dĂ„â€šĂ‹â€ˇ. Zkus to prosĂ„â€šĂ‚Â­m znovu za chvĂ„â€šĂ‚Â­li.");
   } finally {
     hideLoading();
     setComposerDisabled(false);
@@ -573,8 +586,8 @@ function enableTiltEffects() {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      const rotateX = ((y / rect.height) - 0.5) * -6;
-      const rotateY = ((x / rect.width) - 0.5) * 6;
+      const rotateX = ((y / rect.height) - 0.5) * -2.5;
+      const rotateY = ((x / rect.width) - 0.5) * 2.5;
 
       el.style.transform =
         `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -595,14 +608,14 @@ function enableTiltEffects() {
   });
 }
 
-/* Re-apply tilt po kaĹľdĂ© novĂ© zprĂˇvÄ›f */
+/* Re-apply tilt po kaĂ„Ä…Ă„ÄľdĂ„â€šĂ‚Â© novĂ„â€šĂ‚Â© zprĂ„â€šĂ‹â€ˇvÄ‚â€žĂ˘â‚¬Ĺźf */
 const originalAppendMessage = appendMessage;
 appendMessage = function(role, content) {
   originalAppendMessage(role, content);
   enableTiltEffects();
 };
 
-/* Inicializace pĹ™i startu */
+/* Inicializace pĂ„Ä…Ă˘â€žËi startu */
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
 });
