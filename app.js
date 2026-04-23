@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.64";
+const APP_VERSION = "v1.65";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -8,14 +8,14 @@ const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.
 
 
 const loadingMessages = [
-"Chv\u00EDli to lad\u00EDm.",
-"Dolad\u00EDm detaily.",
-"Hlad\u00EDm to do fin\u00E1le.",
-"Je\u0161t\u011B mal\u00FD moment.",
-"Zpracov\u00E1v\u00E1m to jemn\u011B.",
-"T\u00E9m\u011B\u0159 hotovo.",
-"Jen to uhlad\u00EDm.",
-"Brzy to bude p\u0159ipraven\u00E9."
+"Chvíli to ladím.",
+"Doladím detaily.",
+"Hladím to do finále.",
+"Ještě malý moment.",
+"Zpracovávám to jemně.",
+"Téměř hotovo.",
+"Jen to uhladím.",
+"Brzy to bude připravené."
 ];
 
 let loadingBubble = null;
@@ -102,7 +102,7 @@ function renderHistory(items) {
 
   const spacerMeal = document.createElement("div");
   spacerMeal.className = "timeline-bubble-meal";
-  spacerMeal.innerText = "T\u011B\u0161 se!";
+  spacerMeal.innerText = "Těš se!";
 
   spacer.appendChild(spacerDate);
   spacer.appendChild(spacerMeal);
@@ -285,13 +285,13 @@ async function sendMessage(customMessage) {
     }
 
     const data = await res.json();
-    appendMessage("assistant", data.reply || "Backend vr\u00E1til pr\u00E1zdnou odpov\u011B\u010F.");
+    appendMessage("assistant", data.reply || "Backend vrátil prázdnou odpověď.");
     await loadHistory();
     setTimeout(scrollChatToBottom, 50);
 
   } catch (err) {
     console.error("sendMessage failed:", err);
-    appendMessage("assistant", "Backend te\u010F neodpov\u00EDd\u00E1. Zkus to pros\u00EDm znovu za chv\u00EDli.");
+    appendMessage("assistant", "Backend teď neodpovídá. Zkus to prosím znovu za chvíli.");
   } finally {
     hideLoading();
     setComposerDisabled(false);
