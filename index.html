@@ -26,9 +26,9 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.12), transparent 28%),
-    radial-gradient(circle at 80% 0%, rgba(59,130,246,0.10), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgba(148,163,184,0.10), transparent 28%),
+    radial-gradient(circle at 20% 10%, rgba(236,72,153,0.18), transparent 24%),
+    radial-gradient(circle at 80% 0%, rgba(168,85,247,0.16), transparent 22%),
+    radial-gradient(circle at 50% 100%, rgba(99,102,241,0.12), transparent 28%),
     linear-gradient(180deg, #0a0f18 0%, #0f1624 45%, #111827 100%);
   background-attachment: fixed;
   color: #edf2ff;
@@ -48,7 +48,7 @@ body::after {
 body::before {
   background:
     radial-gradient(circle at 20% 20%, rgba(255,255,255,0.07), transparent 18%),
-    radial-gradient(circle at 70% 15%, rgba(96,165,250,0.06), transparent 22%),
+    radial-gradient(circle at 70% 15%, rgba(244,114,182,0.08), transparent 22%),
     radial-gradient(circle at 50% 70%, rgba(255,255,255,0.04), transparent 25%);
   filter: blur(12px);
 }
@@ -65,7 +65,7 @@ body::after {
 .glass {
   position: relative;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+    linear-gradient(180deg, rgba(244,114,182,0.12), rgba(168,85,247,0.06)),
     rgba(15, 23, 42, 0.52);
   border: 1px solid rgba(255,255,255,0.16);
   border-radius: 28px;
@@ -113,7 +113,7 @@ body::after {
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.08)),
+    linear-gradient(180deg, rgba(244,114,182,0.12), rgba(168,85,247,0.08)),
     rgba(15,23,42,0.42);
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(24px) saturate(1.2);
@@ -144,7 +144,7 @@ body::after {
 
 .timeline-bubble.today {
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.22),
+    0 0 0 1px rgba(244,114,182,0.26),
     0 20px 55px rgba(0,0,0,0.28);
 }
 
@@ -159,7 +159,7 @@ body::after {
   align-items: center;
   gap: 8px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06)),
+    linear-gradient(180deg, rgba(244,114,182,0.14), rgba(168,85,247,0.08)),
     rgba(17,24,39,0.62);
   border: 1px solid rgba(255,255,255,0.16);
   border-radius: 999px;
@@ -171,7 +171,7 @@ body::after {
 }
 
 .input-wrapper input::placeholder {
-  color: rgba(226,232,240,0.58);
+  color: rgba(244,231,255,0.58);
 }
 
 #chatSection::-webkit-scrollbar {
@@ -179,7 +179,7 @@ body::after {
 }
 
 #chatSection::-webkit-scrollbar-thumb {
-  background: rgba(148,163,184,0.35);
+  background: rgba(216,180,254,0.38);
   border-radius: 10px;
 }
 
@@ -195,8 +195,8 @@ body::after {
 .user-bubble {
   position: relative;
   box-shadow:
-    0 18px 48px rgba(37,99,235,0.24),
-    inset 0 1px 0 rgba(255,255,255,0.38),
+    0 18px 48px rgba(168,85,247,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.34),
     inset 0 -1px 0 rgba(0,0,0,0.12);
 }
 
@@ -218,7 +218,7 @@ header img {
 </style>
 </head>
 
-<body class="flex flex-col h-screen text-slate-100 overflow-hidden">
+<body class="flex flex-col h-screen text-fuchsia-50 overflow-hidden">
 
 <!-- LOGO -->
 <header class="w-full flex justify-center leading-none pt-2">
@@ -244,10 +244,10 @@ header img {
   <input id="messageInput"
          type="text"
          placeholder="Tak co mi dneska naservĂ­rujeĹˇ?"
-         class="flex-1 bg-transparent text-slate-100 px-6 py-3 text-[15px] focus:outline-none" />
+         class="flex-1 bg-transparent text-fuchsia-50 px-6 py-3 text-[15px] focus:outline-none" />
 
     <button id="sendButton" onclick="sendMessage()"
-            class="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-md hover:scale-105 transition">
+            class="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 via-violet-600 to-indigo-700 text-white shadow-md hover:scale-105 transition">
 
       <svg xmlns="http://www.w3.org/2000/svg" 
           class="w-[18px] h-[18px]"
@@ -262,11 +262,11 @@ header img {
 
 <script>
 console.log("ELAI build:", new Date().toISOString());
-const APP_VERSION = "v1.36";
+const APP_VERSION = "v1.37";
 
 
 /* ===========================
-   Ă„â€ÄąĹźÄąËťĂ„â€ž 3D TILT SYSTEM
+   Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€šĂ‚ÂĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ă„â€šĂ˘â‚¬Ä…Ă„Ä…Ă„â€žÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„Äľ 3D TILT SYSTEM
 =========================== */
 
 function applyTilt(element) {
@@ -292,7 +292,7 @@ function applyTilt(element) {
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
 
-/* PĂ„Ä…Ă‚Â®VODNĂ„â€šÄąÂ¤ FUNKCE JSOU ZACHOVĂ„â€šĂ‚ÂNY POD TĂ„â€šÄąÂ¤MTO Ă„Ä…Ă‚ÂĂ„â€šĂ‚ÂDKEM */
+/* PÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â®VODNÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â¤ FUNKCE JSOU ZACHOVÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚ÂNY POD TÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â¤MTO Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚ÂÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚ÂDKEM */
 
 
 
@@ -379,8 +379,8 @@ function renderHistory(items) {
     }
   });
 
-  // Ă„â€ÄąĹźĂ˘â‚¬ĹĄĂ„â€ž --- TADY JE JEDINĂ„â€šĂ‚Â PĂ„Ä…Ă‚ÂIDANĂ„â€šĂ‚Â VÄ‚â€žÄąË‡C ---
-  // spacer bublina na zĂ„â€šĂ‚Â­tĂ„Ä…Ă˘â€žËek
+  // Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€šĂ‚ÂĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşÄ‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â€šÂ¬ÄąË‡Ä‚â€šĂ‚Â¬Ä‚â€žĂ„â€¦Ä‚â€žĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„Äľ --- TADY JE JEDINÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â PÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚ÂIDANÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â VĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ă„â€šĂ˘â‚¬Ä…Ä‚ËĂ˘â€šÂ¬Ă‹â€ˇC ---
+  // spacer bublina na zÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â­tÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľĂ„â€šĂ˘â‚¬Ä…Ä‚â€šĂ‚Âek
 
   const spacer = document.createElement("div");
   spacer.className = "timeline-bubble";
@@ -395,7 +395,7 @@ function renderHistory(items) {
 
   const spacerMeal = document.createElement("div");
   spacerMeal.className = "timeline-bubble-meal";
-  spacerMeal.innerText = "TÄ‚â€žĂ˘â‚¬ĹźĂ„Ä…Ă‹â€ˇ se!";
+  spacerMeal.innerText = "TĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľÄ‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â€šÂ¬ÄąË‡Ä‚â€šĂ‚Â¬Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡ se!";
 
   spacer.appendChild(spacerDate);
   spacer.appendChild(spacerMeal);
@@ -435,7 +435,7 @@ function updateTimelineScale(container) {
   });
 }
 
-/* SESSION + CHAT (nezmÄ‚â€žĂ˘â‚¬ĹźnÄ‚â€žĂ˘â‚¬Ĺźno) */
+/* SESSION + CHAT (nezmĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľÄ‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â€šÂ¬ÄąË‡Ä‚â€šĂ‚Â¬Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşnĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľÄ‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â€šÂ¬ÄąË‡Ä‚â€šĂ‚Â¬Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşno) */
 async function loadSession() {
   try {
     const res = await fetch(`${API_BASE}/session`);
@@ -465,7 +465,7 @@ function appendMessage(role, content) {
 
   const bubble = document.createElement("div");
   bubble.className = `${
-    role === "assistant" ? "tilt glass text-slate-100" : "bg-gradient-to-br from-sky-500/95 to-blue-600/95 text-white border border-white/20 shadow-[0_18px_48px_rgba(37,99,235,0.22)]"
+    role === "assistant" ? "tilt glass text-fuchsia-50" : "bg-gradient-to-br from-fuchsia-500/95 via-violet-600/95 to-indigo-700/95 text-white border border-white/20 shadow-[0_18px_48px_rgba(168,85,247,0.24)]"
   }
     max-w-[70%] px-5 py-3 rounded-3xl
     animate-[fadeIn_0.3s_ease]
@@ -497,7 +497,7 @@ function setComposerDisabled(disabled) {
   }
 }
 
-/* LOADING (zachovĂ„â€šĂ‹â€ˇno celĂ„â€šĂ‚Â©) */
+/* LOADING (zachovÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡no celÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â©) */
 function showLoading() {
   const chat = document.getElementById("chatSection");
 
@@ -505,7 +505,7 @@ function showLoading() {
   loadingBubble.className = "flex justify-start";
 
   const bubbleInner = document.createElement("div");
-  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-slate-200";
+  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-fuchsia-100";
 
   bubbleInner.innerText =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
@@ -526,7 +526,7 @@ function hideLoading() {
   loadingBubble = null;
 }
 
-/* SEND (zachovĂ„â€šĂ‹â€ˇno) */
+/* SEND (zachovÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡no) */
 async function sendMessage() {
   const input = document.getElementById("messageInput");
   const message = input.value.trim();
@@ -551,13 +551,13 @@ async function sendMessage() {
     }
 
     const data = await res.json();
-    appendMessage("assistant", data.reply || "Backend vrĂ„â€šĂ‹â€ˇtil prĂ„â€šĂ‹â€ˇzdnou odpovÄ‚â€žĂ˘â‚¬ĹźÄ‚â€žÄąÄ….");
+    appendMessage("assistant", data.reply || "Backend vrÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡til prÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡zdnou odpovĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľÄ‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â€šÂ¬ÄąË‡Ä‚â€šĂ‚Â¬Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ă„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦.");
     await loadHistory();
     setTimeout(scrollChatToBottom, 50);
 
   } catch (err) {
     console.error("sendMessage failed:", err);
-    appendMessage("assistant", "Backend teÄ‚â€žÄąÄ… neodpovĂ„â€šĂ‚Â­dĂ„â€šĂ‹â€ˇ. Zkus to prosĂ„â€šĂ‚Â­m znovu za chvĂ„â€šĂ‚Â­li.");
+    appendMessage("assistant", "Backend teĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ˘â‚¬Â¦Ă„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦ neodpovÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â­dÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡. Zkus to prosÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â­m znovu za chvÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â­li.");
   } finally {
     hideLoading();
     setComposerDisabled(false);
@@ -608,14 +608,14 @@ function enableTiltEffects() {
   });
 }
 
-/* Re-apply tilt po kaĂ„Ä…Ă„ÄľdĂ„â€šĂ‚Â© novĂ„â€šĂ‚Â© zprĂ„â€šĂ‹â€ˇvÄ‚â€žĂ˘â‚¬Ĺźf */
+/* Re-apply tilt po kaÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚â€žĂ„ÄľdÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â© novÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â© zprÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă‹â€ˇÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬Ă„â€¦Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ä‚â€ąĂ˘â‚¬Ë‡vĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬ÄąË‡Ă„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľÄ‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â€šÂ¬ÄąË‡Ä‚â€šĂ‚Â¬Ä‚â€žĂ„â€¦Ă„Ä…ÄąĹşf */
 const originalAppendMessage = appendMessage;
 appendMessage = function(role, content) {
   originalAppendMessage(role, content);
   enableTiltEffects();
 };
 
-/* Inicializace pĂ„Ä…Ă˘â€žËi startu */
+/* Inicializace pÄ‚â€žĂ˘â‚¬ĹˇÄ‚ËĂ˘â€šÂ¬ÄąÄľĂ„â€šĂ˘â‚¬ĹľÄ‚ËĂ˘â€šÂ¬Ă‚Â¦Ä‚â€žĂ˘â‚¬ĹˇÄ‚â€ąĂ‚ÂĂ„â€šĂ‹ÂÄ‚ËĂ˘â‚¬ĹˇĂ‚Â¬Ă„Ä…Ă„ÄľĂ„â€šĂ˘â‚¬Ä…Ä‚â€šĂ‚Âi startu */
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
 });
