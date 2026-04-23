@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.58";
+const APP_VERSION = "v1.59";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -299,7 +299,7 @@ async function sendMessage(customMessage) {
 }
 
 function tryLuck() {
-  sendMessage("Co mÄ‚Ë‡m dnes uvaÄąâ„˘it?");
+  sendMessage("Co mĂ„â€šĂ‹â€ˇm dnes uvaĂ„Ä…Ă˘â€žËit?");
 }
 
 document.getElementById("messageInput")
