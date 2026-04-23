@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.66";
+const APP_VERSION = "v1.67";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -15,27 +15,27 @@ const loadingMessages = [
 "Zpracovávám to jemně.",
 "Téměř hotovo.",
 "Jen to uhladím.",
-"Brzy to bude připravené."
- "Hážu ingredience do hrnce...",
- "Míchám AI recept...",
- "Dochucuji to špetkou magie...",
- "Kontroluji, jestli se to nepřipaluje...",
- "Ještě kapku inspirace...",
- "Tohle bude dobrota...",
- "Už to bublá správně...",
- "Ladím chuť k dokonalosti...",
- "Připravuji něco speciálního...",
- "Za chvíli servíruju!"
- "Rozehřívám pánev...",
- "Míchám to k dokonalosti...",
- "Dochucuji poslední detaily...",
- "Nechávám to chvíli probublat...",
- "Servíruji něco dobrého...",
- "Ještě špetku kreativity...",
- "Pomalu to zraje...",
- "Už to voní skvěle...",
- "Chystám něco lahodného...",
- "Už to skoro můžeme servírovat..."
+"Brzy to bude připravené.",
+"Hážu ingredience do hrnce...",
+"Míchám AI recept...",
+"Dochucuji to špetkou magie...",
+"Kontroluji, jestli se to nepřipaluje...",
+"Ještě kapku inspirace...",
+"Tohle bude dobrota...",
+"Už to bublá správně...",
+"Ladím chuť k dokonalosti...",
+"Připravuji něco speciálního...",
+"Za chvíli servíruju!",
+"Rozehřívám pánev...",
+"Míchám to k dokonalosti...",
+"Dochucuji poslední detaily...",
+"Nechávám to chvíli probublat...",
+"Servíruji něco dobrého...",
+"Ještě špetku kreativity...",
+"Pomalu to zraje...",
+"Už to voní skvěle...",
+"Chystám něco lahodného...",
+"Už to skoro můžeme servírovat..."
 
 ];
 
