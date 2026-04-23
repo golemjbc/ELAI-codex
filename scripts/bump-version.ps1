@@ -8,11 +8,12 @@ if (-not (Test-Path $appPath)) {
     throw "Soubor app.js nebyl nalezen: $appPath"
 }
 
-$content = Get-Content -LiteralPath $appPath -Raw
+# Always read as UTF-8 so non-ASCII text in app.js survives version bumps.
+$content = Get-Content -LiteralPath $appPath -Raw -Encoding UTF8
 $pattern = 'const APP_VERSION = "v(\d+)\.(\d+)";'
 
 if ($content -notmatch $pattern) {
-    throw "V app.js jsem nenašel řádek s APP_VERSION."
+    throw "V app.js jsem nenasel radek s APP_VERSION."
 }
 
 $major = [int]$Matches[1]
@@ -29,4 +30,4 @@ $updatedContent = [regex]::Replace(
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText($appPath, $updatedContent, $utf8NoBom)
 
-Write-Host "Verze aktualizována na $newVersion"
+Write-Host "Verze aktualizovana na $newVersion"
