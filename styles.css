@@ -1,0 +1,269 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 167, 222, 0.10), transparent 18%),
+    radial-gradient(circle at 82% 8%, rgba(166, 142, 255, 0.10), transparent 18%),
+    radial-gradient(circle at 50% 108%, rgba(107, 138, 255, 0.14), transparent 26%),
+    linear-gradient(180deg, #080b13 0%, #0a1120 44%, #10192b 100%);
+  background-attachment: fixed;
+  color: #f8ecff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body > .wallpaper-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("img/food-wallpaper.png");
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  background-position: center;
+  opacity: 0.34;
+  filter: saturate(1.08) brightness(1.12) contrast(1.06);
+  mix-blend-mode: screen;
+}
+
+body > .aurora-layer {
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 182, 224, 0.16), transparent 18%),
+    radial-gradient(circle at 78% 16%, rgba(168, 160, 255, 0.14), transparent 20%),
+    radial-gradient(circle at 50% 82%, rgba(88, 125, 255, 0.14), transparent 22%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05), transparent 45%);
+  filter: blur(42px) saturate(1.08);
+  opacity: 0.62;
+  animation: floatAurora 18s ease-in-out infinite alternate;
+  transform: translate3d(0, 0, 0);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 18%),
+    radial-gradient(circle at 70% 15%, rgba(255,182,224,0.06), transparent 22%),
+    radial-gradient(circle at 50% 70%, rgba(255,255,255,0.03), transparent 25%);
+  filter: blur(16px);
+}
+
+body::after {
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.035), transparent 45%),
+    radial-gradient(circle at 35% 25%, rgba(255,255,255,0.02), transparent 18%),
+    radial-gradient(circle at 75% 70%, rgba(255,255,255,0.02), transparent 18%);
+  opacity: 0.40;
+}
+.glass {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.05)),
+    linear-gradient(180deg, rgba(182,194,255,0.06), rgba(255,255,255,0.02)),
+    rgba(18, 24, 42, 0.44);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 30px;
+  backdrop-filter: blur(36px) saturate(1.06);
+  -webkit-backdrop-filter: blur(36px) saturate(1.06);
+  box-shadow:
+    0 30px 85px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.38),
+    inset 0 -1px 0 rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background:
+    radial-gradient(circle at 22% 16%, rgba(255,255,255,0.34), transparent 28%),
+    linear-gradient(135deg, rgba(255,255,255,0.18), transparent 40%);
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.timeline-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x proximity;
+  padding: 16px 20px 10px;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.timeline-bubble {
+  scroll-snap-align: center;
+  padding: 11px 18px;
+  border-radius: 999px;
+  min-width: 142px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04)),
+    linear-gradient(180deg, rgba(178,189,255,0.06), rgba(255,255,255,0.03)),
+    rgba(18,25,45,0.30);
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(30px) saturate(1.05);
+  -webkit-backdrop-filter: blur(30px) saturate(1.05);
+  box-shadow:
+    0 16px 44px rgba(0,0,0,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+  opacity: 0.40;
+}
+
+.timeline-bubble-date {
+  font-size: 10px;
+  opacity: 0.62;
+  letter-spacing: 0.02em;
+}
+
+.timeline-bubble-meal {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+.timeline-bubble.today {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.16),
+    0 20px 52px rgba(0,0,0,0.18);
+}
+
+.input-wrapper {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)),
+    linear-gradient(180deg, rgba(182,194,255,0.06), rgba(255,255,255,0.03)),
+    rgba(18,25,45,0.44);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 999px;
+  backdrop-filter: blur(36px) saturate(1.05);
+  -webkit-backdrop-filter: blur(36px) saturate(1.05);
+  padding: 8px 10px;
+  box-shadow:
+    0 22px 60px rgba(0,0,0,0.20),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+}
+
+.input-wrapper input::placeholder {
+  color: rgba(244,231,255,0.74);
+}
+
+#chatSection::-webkit-scrollbar {
+  width: 4px;
+}
+
+#chatSection::-webkit-scrollbar-thumb {
+  background: rgba(216,180,254,0.38);
+  border-radius: 10px;
+}
+
+.timeline-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.user-bubble {
+  position: relative;
+  box-shadow:
+    0 18px 40px rgba(168,85,247,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 -1px 0 rgba(0,0,0,0.05);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05)),
+    linear-gradient(135deg, rgba(255, 182, 224, 0.22), rgba(168, 160, 255, 0.18) 48%, rgba(107, 138, 255, 0.16));
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 26px;
+}
+
+.assistant-bubble {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+    rgba(22, 29, 50, 0.50);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 28px;
+  box-shadow:
+    0 18px 44px rgba(0,0,0,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+}
+
+#chatSection {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 140px;
+}
+
+@keyframes floatAurora {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(0, -12px, 0) scale(1.03);
+  }
+}
+
+.timeline-wrapper,
+.input-wrapper,
+header {
+  position: relative;
+  z-index: 1;
+}
+
+header img {
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.28));
+}
+
+#appVersion {
+  position: fixed;
+  bottom: 4px;
+  right: 8px;
+  font-size: 10px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 9999;
+}
