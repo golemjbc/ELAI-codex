@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ELAI</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+/* ===========================
+   🌊 Animated Gradient Background
+=========================== */
+body {
+  margin: 0;
+  background: linear-gradient(
+    120deg,
+    #0f172a,
+    #1e1b4b,
+    #111827,
+    #1e293b
+  );
+  background-size: 300% 300%;
+  animation: gradientMove 18s ease infinite;
+  overflow-x: hidden;
+  /*padding-bottom: 140px; /* prostor pro floating input */
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===========================
+   🧊 Vision Glass Ultra
+=========================== */
+.glass {
+  position: relative;
+  background: rgba(255,255,255,0.04); /* velmi jemné */
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 26px;
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(255,255,255,0.1);
+
+  overflow: hidden;
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(255,255,255,0.18),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+
+/* ===========================
+   🫧 Timeline
+=========================== */
+.timeline-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: visible;   /* 👈 důležité */
+  scroll-snap-type: x proximity;
+  padding: 0 24px;
+  gap: 12px;
+  margin-top: 6px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+
+
+.timeline-bubble {
+  scroll-snap-align: center;
+  padding: 10px 18px;
+  border-radius: 24px;
+  min-width: 130px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+  opacity: 0.4;
+}
+
+.timeline-bubble-date {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.timeline-bubble-meal {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+.timeline-bubble.today {
+  box-shadow:
+    0 0 120px rgba(139,92,246,0.8),
+    0 30px 80px rgba(0,0,0,0.7);
+}
+
+/* ===========================
+   💎 FLOATING INPUT
+=========================== */
+.input-wrapper {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 520px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(20,20,35,0.85);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 40px;
+
+  padding: 6px 8px;
+  
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.6);
+}
+
+
+/* ===========================
+   ✨ Scrollbar
+=========================== */
+#chatSection::-webkit-scrollbar {
+  width: 4px;
+}
+#chatSection::-webkit-scrollbar-thumb {
+  background: rgba(139,92,246,0.4);
+  border-radius: 10px;
+}
+
+/* Hide horizontal scrollbar for timeline */
+.timeline-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.user-bubble {
+  position: relative;
+  box-shadow:
+    0 25px 70px rgba(99,102,241,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+
+
+</style>
+</head>
+
+<body class="flex flex-col h-screen text-zinc-200 overflow-hidden">
+
+<!-- LOGO -->
+<header class="w-full flex justify-center leading-none pt-2">
+  <img src="img/ELAI.png"
+     class="block max-w-[160px] w-full h-auto object-contain opacity-95 m-0 p-0" />
+</header>
+
+
+<!-- TIMELINE -->
+<div class="timeline-wrapper" id="historySection">
+</div>
+
+<!-- CHAT -->
+<div id="chatSection"
+     class="flex-1 overflow-y-auto px-6 pt-4 space-y-6 max-w-2xl mx-auto"
+     style="padding-bottom: 140px;">
+</div>
+
+
+
+<!-- FLOATING INPUT -->
+<div class="input-wrapper">
+  <input id="messageInput"
+         type="text"
+         placeholder="Tak co mi dneska naservíruješ?"
+         class="flex-1 bg-transparent text-zinc-200 px-12 py-2 text-sm focus:outline-none" />
+
+    <button onclick="sendMessage()"
+            class="w-10 h-10 flex items-center justify-center rounded-full 
+                  bg-gradient-to-br from-violet-500 to-indigo-500 
+                  text-white shadow-md hover:scale-105 transition">
+
+      <svg xmlns="http://www.w3.org/2000/svg" 
+          class="w-4 h-4"
+          viewBox="0 0 24 24" 
+          fill="currentColor">
+        <path d="M3 20v-6l15-2-15-2V4l19 8-19 8z"/>
+      </svg>
+
+    </button>
+
+</div>
+
+<script>
+console.log("ELAI build:", new Date().toISOString());
+
+
+/* ===========================
+   🎥 3D TILT SYSTEM
+=========================== */
+
+function applyTilt(element) {
+  element.addEventListener("mousemove", (e) => {
+    const rect = element.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = ((y / rect.height) - 0.5) * -6;
+    const rotateY = ((x / rect.width) - 0.5) * 6;
+
+    element.style.transform =
+      `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+    element.querySelector("::before");
+  });
+
+  element.addEventListener("mouseleave", () => {
+    element.style.transform = "rotateX(0deg) rotateY(0deg)";
+  });
+}
+
+const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
+
+
+/* PŮVODNÍ FUNKCE JSOU ZACHOVÁNY POD TÍMTO ŘÁDKEM */
+
+
+
+const loadingMessages = [
+"Zvyšuju tlak. Udržíš to?",
+"Teplota roste. A já to miluju.",
+"Ještě chvíli… a praskne to.",
+"Dusím tě napětím.",
+"Drž se. Bude to intenzivní.",
+"Tlak stoupá. Výsledek bude výbušný.",
+"Vařím to tak dlouho, až to přeteče.",
+"Míchám to tvrdě. A bez slitování.",
+"Cítíš to napětí?",
+"Ještě pár vteřin… a exploduje to.",
+"Zahřívám to na hranici únosnosti.",
+"Trochu vlhka nikdy neuškodí.",
+"Připrav se. Bude to silné.",
+"Napínám tě schválně.",
+"Hraju si s tlakem, dokud to nevystřelí.",
+"Dusím tě pomalu. Protože můžu.",
+"Ještě víc tepla… ještě víc napětí.",
+"Blížím se k vrcholu výpočtu.",
+"Tohle bude mít náboj.",
+"Chceš to rychle? Smůla."
+];
+
+let loadingBubble = null;
+let loadingInterval = null;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadHistory();
+  await loadSession();
+});
+
+/* HISTORY */
+async function loadHistory() {
+  try {
+    const res = await fetch(`${API_BASE}/history`);
+    const data = await res.json();
+    const history = data.history || [];
+    renderHistory(filterLast14Days(history));
+  } catch {}
+}
+
+function filterLast14Days(history) {
+  const now = new Date();
+  return history.filter(item => {
+    const d = new Date(item.date);
+    return (now - d) / (1000 * 60 * 60 * 24) <= 14;
+  });
+}
+
+function renderHistory(items) {
+  const container = document.getElementById("historySection");
+  container.innerHTML = "";
+
+  if (!items.length) return;
+
+  const today = new Date().toISOString().slice(0,10);
+  items.sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+  let lastTodayBubble = null;
+
+  items.forEach(item => {
+
+    const bubble = document.createElement("div");
+    bubble.className = "timeline-bubble";
+
+    if (item.date === today) {
+      bubble.classList.add("today");
+      lastTodayBubble = bubble;
+    }
+
+    const dateDiv = document.createElement("div");
+    dateDiv.className = "timeline-bubble-date";
+    dateDiv.innerText = item.date;
+
+    const mealDiv = document.createElement("div");
+    mealDiv.className = "timeline-bubble-meal";
+    mealDiv.innerText = item.meal_name || item.meal_id;
+
+    bubble.appendChild(dateDiv);
+    bubble.appendChild(mealDiv);
+    container.appendChild(bubble);
+
+    if (item.date === today) {
+      setTimeout(() => {
+        bubble.scrollIntoView({
+          inline: "center",
+          behavior: "auto"
+        });
+      }, 0);
+    }
+  });
+
+  // 🔥 --- TADY JE JEDINÁ PŘIDANÁ VĚC ---
+  // spacer bublina na zítřek
+
+  const spacer = document.createElement("div");
+  spacer.className = "timeline-bubble";
+  spacer.style.opacity = "0.15";
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const spacerDate = document.createElement("div");
+  spacerDate.className = "timeline-bubble-date";
+  spacerDate.innerText = tomorrow.toISOString().slice(0,10);
+
+  const spacerMeal = document.createElement("div");
+  spacerMeal.className = "timeline-bubble-meal";
+  spacerMeal.innerText = "Těš se!";
+
+  spacer.appendChild(spacerDate);
+  spacer.appendChild(spacerMeal);
+  container.appendChild(spacer);
+
+  // --------------------------------------
+
+  container.addEventListener("scroll", () => {
+    if (!container.dataset.locked) {
+      updateTimelineScale(container);
+    }
+  });
+
+  updateTimelineScale(container);
+}
+
+
+/* WAU depth effect */
+function updateTimelineScale(container) {
+  const bubbles = container.querySelectorAll(".timeline-bubble");
+  const center = container.scrollLeft + container.offsetWidth / 2;
+
+  bubbles.forEach(bubble => {
+    const bubbleCenter =
+      bubble.offsetLeft + bubble.offsetWidth / 2;
+
+    const distance = Math.abs(center - bubbleCenter);
+    const maxDistance = container.offsetWidth / 2;
+
+    const ratio = Math.max(0, 1 - distance / maxDistance);
+
+    const scale = 0.7 + ratio * 0.5;
+    const opacity = 0.2 + ratio * 0.8;
+
+    bubble.style.transform = `scale(${scale})`;
+    bubble.style.opacity = opacity;
+  });
+}
+
+/* SESSION + CHAT (nezměněno) */
+async function loadSession() {
+  try {
+    const res = await fetch(`${API_BASE}/session`);
+    const data = await res.json();
+    const today = new Date().toISOString().slice(0,10);
+    const session = (data.sessions || []).find(s => s.date === today);
+    if (session) renderChat(session.messages);
+  } catch {}
+}
+
+function renderChat(messages) {
+  const chat = document.getElementById("chatSection");
+  chat.innerHTML = "";
+  messages.forEach(msg => appendMessage(msg.role, msg.content));
+  setTimeout(scrollChatToBottom, 50);
+}
+
+function appendMessage(role, content) {
+  const chat = document.getElementById("chatSection");
+  const wrapper = document.createElement("div");
+  wrapper.className = role === "user"
+    ? "flex justify-end"
+    : "flex justify-start";
+
+  wrapper.innerHTML = `
+    <div class="${
+      role === "assistant" ? "tilt glass text-zinc-200" : 
+      "bg-gradient-to-br from-violet-500 to-indigo-600 text-white border border-white/20 shadow-[0_25px_70px_rgba(99,102,241,0.6)]"
+    } 
+    max-w-[70%] px-5 py-3 rounded-3xl 
+    animate-[fadeIn_0.3s_ease] 
+    transition-all duration-300 ease-out">
+      ${content}
+    </div>`;
+
+
+  chat.appendChild(wrapper);
+}
+
+function scrollChatToBottom() {
+  const chat = document.getElementById("chatSection");
+  chat.scrollTop = chat.scrollHeight;
+}
+
+/* LOADING (zachováno celé) */
+function showLoading() {
+  const chat = document.getElementById("chatSection");
+
+  loadingBubble = document.createElement("div");
+  loadingBubble.className = "flex justify-start";
+
+  const bubbleInner = document.createElement("div");
+  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-zinc-300";
+
+  bubbleInner.innerText =
+    loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+
+  loadingBubble.appendChild(bubbleInner);
+  chat.appendChild(loadingBubble);
+  scrollChatToBottom();
+
+  loadingInterval = setInterval(() => {
+    bubbleInner.innerText =
+      loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+  }, 2000);
+}
+
+function hideLoading() {
+  if (loadingInterval) clearInterval(loadingInterval);
+  if (loadingBubble) loadingBubble.remove();
+  loadingBubble = null;
+}
+
+/* SEND (zachováno) */
+async function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const message = input.value.trim();
+  if (!message) return;
+
+  appendMessage("user", message);
+  input.value = "";
+  scrollChatToBottom();
+
+  showLoading();
+
+  try {
+    const res = await fetch(`${API_BASE}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await res.json();
+    hideLoading();
+    appendMessage("assistant", data.reply);
+    await loadHistory();
+    setTimeout(scrollChatToBottom, 50);
+
+  } catch {
+    hideLoading();
+  }
+}
+
+document.getElementById("messageInput")
+  .addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+  });
+
+/* ===========================
+   VISION DEPTH ACTIVATION
+=========================== */
+
+function enableTiltEffects() {
+  const elements = document.querySelectorAll(".tilt:not([data-tilt])");
+
+  elements.forEach(el => {
+
+    el.dataset.tilt = "true";
+
+
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const rotateX = ((y / rect.height) - 0.5) * -6;
+      const rotateY = ((x / rect.width) - 0.5) * 6;
+
+      el.style.transform =
+        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+      const lightX = (x / rect.width) * 100;
+      const lightY = (y / rect.height) * 100;
+
+      el.style.setProperty(
+        "--light",
+        `${lightX}% ${lightY}%`
+      );
+    });
+
+    el.addEventListener("mouseleave", () => {
+      el.style.transform =
+        "perspective(800px) rotateX(0deg) rotateY(0deg)";
+    });
+  });
+}
+
+/* Re-apply tilt po každé nové zprávěf */
+const originalAppendMessage = appendMessage;
+appendMessage = function(role, content) {
+  originalAppendMessage(role, content);
+  enableTiltEffects();
+};
+
+/* Inicializace při startu */
+document.addEventListener("DOMContentLoaded", () => {
+  enableTiltEffects();
+});
+
+
+</script>
+
+<div id="appVersion"
+     style="
+       position: fixed;
+       bottom: 4px;
+       right: 8px;
+       font-size: 10px;
+       opacity: 0.4;
+       pointer-events: none;
+       z-index: 9999;
+     ">
+  v1.33
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+
+</body>
+</html>
