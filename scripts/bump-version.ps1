@@ -2,17 +2,17 @@ param(
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 )
 
-$indexPath = Join-Path $RepoRoot "index.html"
+$appPath = Join-Path $RepoRoot "app.js"
 
-if (-not (Test-Path $indexPath)) {
-    throw "Soubor index.html nebyl nalezen: $indexPath"
+if (-not (Test-Path $appPath)) {
+    throw "Soubor app.js nebyl nalezen: $appPath"
 }
 
-$content = Get-Content -LiteralPath $indexPath -Raw
+$content = Get-Content -LiteralPath $appPath -Raw
 $pattern = 'const APP_VERSION = "v(\d+)\.(\d+)";'
 
 if ($content -notmatch $pattern) {
-    throw "V index.html jsem nenašel řádek s APP_VERSION."
+    throw "V app.js jsem nenašel řádek s APP_VERSION."
 }
 
 $major = [int]$Matches[1]
@@ -27,6 +27,6 @@ $updatedContent = [regex]::Replace(
 )
 
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-[System.IO.File]::WriteAllText($indexPath, $updatedContent, $utf8NoBom)
+[System.IO.File]::WriteAllText($appPath, $updatedContent, $utf8NoBom)
 
 Write-Host "Verze aktualizována na $newVersion"

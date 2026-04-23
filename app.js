@@ -1,9 +1,9 @@
-const APP_VERSION = "v1.49";
+const APP_VERSION = "v1.50";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
 
-/* ZprĂˇvy pro prĹŻbÄ›ĹľnĂ© naÄŤĂ­tĂˇnĂ­. */
+/* ZprÄ‚Ë‡vy pro prÄąĹ»bĂ„â€şÄąÄľnÄ‚Â© naĂ„Ĺ¤Ä‚Â­tÄ‚Ë‡nÄ‚Â­. */
 
 
 
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadSession();
 });
 
-/* Historie jĂ­delnĂ­ÄŤku. */
+/* Historie jÄ‚Â­delnÄ‚Â­Ă„Ĺ¤ku. */
 async function loadHistory() {
   try {
     const res = await fetch(`${API_BASE}/history`);
@@ -87,7 +87,7 @@ function renderHistory(items) {
     }
   });
 
-  // PĹ™idĂˇ jemnou bublinu pro zĂ­tĹ™ejĹˇĂ­ den.
+  // PÄąâ„˘idÄ‚Ë‡ jemnou bublinu pro zÄ‚Â­tÄąâ„˘ejÄąË‡Ä‚Â­ den.
 
   const spacer = document.createElement("div");
   spacer.className = "timeline-bubble";
@@ -112,7 +112,7 @@ function renderHistory(items) {
 }
 
 
-/* HloubkovĂ˝ efekt ÄŤasovĂ© osy. */
+/* HloubkovÄ‚Ëť efekt Ă„Ĺ¤asovÄ‚Â© osy. */
 function updateTimelineScale(container) {
   const bubbles = container.querySelectorAll(".timeline-bubble");
   const center = container.scrollLeft + container.offsetWidth / 2;
@@ -165,7 +165,7 @@ function updateAmbientMotion() {
   });
 }
 
-/* DneĹˇnĂ­ konverzace a vykreslenĂ­ chatu. */
+/* DneÄąË‡nÄ‚Â­ konverzace a vykreslenÄ‚Â­ chatu. */
 async function loadSession() {
   try {
     const res = await fetch(`${API_BASE}/session`);
@@ -227,7 +227,7 @@ function setComposerDisabled(disabled) {
   }
 }
 
-/* Indikace ÄŤekĂˇnĂ­ na odpovÄ›ÄŹ. */
+/* Indikace Ă„Ĺ¤ekÄ‚Ë‡nÄ‚Â­ na odpovĂ„â€şĂ„Ĺą. */
 function showLoading() {
   const chat = document.getElementById("chatSection");
 
@@ -256,7 +256,7 @@ function hideLoading() {
   loadingBubble = null;
 }
 
-/* OdeslĂˇnĂ­ zprĂˇvy na backend. */
+/* OdeslÄ‚Ë‡nÄ‚Â­ zprÄ‚Ë‡vy na backend. */
 async function sendMessage() {
   const input = document.getElementById("messageInput");
   const message = input.value.trim();
@@ -299,7 +299,7 @@ document.getElementById("messageInput")
     if (e.key === "Enter") sendMessage();
   });
 
-/* Tilt efekt pro sklenÄ›nĂ© bubliny. */
+/* Tilt efekt pro sklenĂ„â€şnÄ‚Â© bubliny. */
 
 function enableTiltEffects() {
   const elements = document.querySelectorAll(".tilt:not([data-tilt])");
@@ -336,14 +336,14 @@ function enableTiltEffects() {
   });
 }
 
-/* Po pĹ™idĂˇnĂ­ zprĂˇvy znovu zapne tilt efekt. */
+/* Po pÄąâ„˘idÄ‚Ë‡nÄ‚Â­ zprÄ‚Ë‡vy znovu zapne tilt efekt. */
 const originalAppendMessage = appendMessage;
 appendMessage = function(role, content) {
   originalAppendMessage(role, content);
   enableTiltEffects();
 };
 
-/* Inicializace efektĹŻ po naÄŤtenĂ­ strĂˇnky. */
+/* Inicializace efektÄąĹ» po naĂ„Ĺ¤tenÄ‚Â­ strÄ‚Ë‡nky. */
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
   updateAmbientMotion();
