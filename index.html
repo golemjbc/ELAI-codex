@@ -218,7 +218,7 @@ body {
          placeholder="Tak co mi dneska naservíruješ?"
          class="flex-1 bg-transparent text-zinc-200 px-12 py-2 text-sm focus:outline-none" />
 
-    <button onclick="sendMessage()"
+    <button id="sendButton" onclick="sendMessage()"
             class="w-10 h-10 flex items-center justify-center rounded-full 
                   bg-gradient-to-br from-violet-500 to-indigo-500 
                   text-white shadow-md hover:scale-105 transition">
@@ -304,10 +304,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadHistory() {
   try {
     const res = await fetch(`${API_BASE}/history`);
+    if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     const history = data.history || [];
     renderHistory(filterLast14Days(history));
-  } catch {}
+  } catch (err) {
+    console.error("loadHistory failed:", err);
+  }
 }
 
 function filterLast14Days(history) {
@@ -421,11 +424,14 @@ function updateTimelineScale(container) {
 async function loadSession() {
   try {
     const res = await fetch(`${API_BASE}/session`);
+    if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     const today = new Date().toISOString().slice(0,10);
     const session = (data.sessions || []).find(s => s.date === today);
     if (session) renderChat(session.messages);
-  } catch {}
+  } catch (err) {
+    console.error("loadSession failed:", err);
+  }
 }
 
 function renderChat(messages) {
@@ -442,16 +448,16 @@ function appendMessage(role, content) {
     ? "flex justify-end"
     : "flex justify-start";
 
-  wrapper.innerHTML = `
-    <div class="${
-      role === "assistant" ? "tilt glass text-zinc-200" : 
-      "bg-gradient-to-br from-violet-500 to-indigo-600 text-white border border-white/20 shadow-[0_25px_70px_rgba(99,102,241,0.6)]"
-    } 
-    max-w-[70%] px-5 py-3 rounded-3xl 
-    animate-[fadeIn_0.3s_ease] 
-    transition-all duration-300 ease-out">
-      ${content}
-    </div>`;
+  const bubble = document.createElement("div");
+  bubble.className = `${
+    role === "assistant" ? "tilt glass text-zinc-200" : 
+    "bg-gradient-to-br from-violet-500 to-indigo-600 text-white border border-white/20 shadow-[0_25px_70px_rgba(99,102,241,0.6)]"
+  }
+    max-w-[70%] px-5 py-3 rounded-3xl
+    animate-[fadeIn_0.3s_ease]
+    transition-all duration-300 ease-out whitespace-pre-wrap break-words`;
+  bubble.textContent = content;
+  wrapper.appendChild(bubble);
 
 
   chat.appendChild(wrapper);
@@ -460,6 +466,21 @@ function appendMessage(role, content) {
 function scrollChatToBottom() {
   const chat = document.getElementById("chatSection");
   chat.scrollTop = chat.scrollHeight;
+}
+
+function setComposerDisabled(disabled) {
+  const input = document.getElementById("messageInput");
+  const button = document.getElementById("sendButton");
+
+  input.disabled = disabled;
+  input.classList.toggle("opacity-60", disabled);
+  input.classList.toggle("cursor-not-allowed", disabled);
+
+  if (button) {
+    button.disabled = disabled;
+    button.classList.toggle("opacity-70", disabled);
+    button.classList.toggle("cursor-not-allowed", disabled);
+  }
 }
 
 /* LOADING (zachováno celé) */
@@ -502,6 +523,7 @@ async function sendMessage() {
   scrollChatToBottom();
 
   showLoading();
+  setComposerDisabled(true);
 
   try {
     const res = await fetch(`${API_BASE}/chat`, {
@@ -510,14 +532,21 @@ async function sendMessage() {
       body: JSON.stringify({ message })
     });
 
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+
     const data = await res.json();
-    hideLoading();
-    appendMessage("assistant", data.reply);
+    appendMessage("assistant", data.reply || "Backend vrátil prázdnou odpověď.");
     await loadHistory();
     setTimeout(scrollChatToBottom, 50);
 
-  } catch {
+  } catch (err) {
+    console.error("sendMessage failed:", err);
+    appendMessage("assistant", "Backend teď neodpovídá. Zkus to prosím znovu za chvíli.");
+  } finally {
     hideLoading();
+    setComposerDisabled(false);
   }
 }
 
