@@ -236,6 +236,7 @@ body {
 
 <script>
 console.log("ELAI build:", new Date().toISOString());
+const APP_VERSION = "v1.34";
 
 
 /* ===========================
@@ -618,9 +619,10 @@ document.addEventListener("DOMContentLoaded", () => {
        opacity: 0.4;
        pointer-events: none;
        z-index: 9999;
-     ">
-  v1.33
-</div>
+     "></div>
+<script>
+document.getElementById("appVersion").textContent = APP_VERSION;
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
