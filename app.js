@@ -1,9 +1,9 @@
-const APP_VERSION = "v1.50";
+const APP_VERSION = "v1.51";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
 
-/* ZprÄ‚Ë‡vy pro prÄąĹ»bĂ„â€şÄąÄľnÄ‚Â© naĂ„Ĺ¤Ä‚Â­tÄ‚Ë‡nÄ‚Â­. */
+/* ZprĂ„â€šĂ‹â€ˇvy pro prĂ„Ä…ÄąÂ»bÄ‚â€žĂ˘â‚¬ĹźĂ„Ä…Ă„ÄľnĂ„â€šĂ‚Â© naÄ‚â€žÄąÂ¤Ă„â€šĂ‚Â­tĂ„â€šĂ‹â€ˇnĂ„â€šĂ‚Â­. */
 
 
 
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadSession();
 });
 
-/* Historie jÄ‚Â­delnÄ‚Â­Ă„Ĺ¤ku. */
+/* Historie jĂ„â€šĂ‚Â­delnĂ„â€šĂ‚Â­Ä‚â€žÄąÂ¤ku. */
 async function loadHistory() {
   try {
     const res = await fetch(`${API_BASE}/history`);
@@ -87,7 +87,7 @@ function renderHistory(items) {
     }
   });
 
-  // PÄąâ„˘idÄ‚Ë‡ jemnou bublinu pro zÄ‚Â­tÄąâ„˘ejÄąË‡Ä‚Â­ den.
+  // PĂ„Ä…Ă˘â€žËidĂ„â€šĂ‹â€ˇ jemnou bublinu pro zĂ„â€šĂ‚Â­tĂ„Ä…Ă˘â€žËejĂ„Ä…Ă‹â€ˇĂ„â€šĂ‚Â­ den.
 
   const spacer = document.createElement("div");
   spacer.className = "timeline-bubble";
@@ -112,7 +112,7 @@ function renderHistory(items) {
 }
 
 
-/* HloubkovÄ‚Ëť efekt Ă„Ĺ¤asovÄ‚Â© osy. */
+/* HloubkovĂ„â€šĂ‹ĹĄ efekt Ä‚â€žÄąÂ¤asovĂ„â€šĂ‚Â© osy. */
 function updateTimelineScale(container) {
   const bubbles = container.querySelectorAll(".timeline-bubble");
   const center = container.scrollLeft + container.offsetWidth / 2;
@@ -165,7 +165,7 @@ function updateAmbientMotion() {
   });
 }
 
-/* DneÄąË‡nÄ‚Â­ konverzace a vykreslenÄ‚Â­ chatu. */
+/* DneĂ„Ä…Ă‹â€ˇnĂ„â€šĂ‚Â­ konverzace a vykreslenĂ„â€šĂ‚Â­ chatu. */
 async function loadSession() {
   try {
     const res = await fetch(`${API_BASE}/session`);
@@ -227,7 +227,7 @@ function setComposerDisabled(disabled) {
   }
 }
 
-/* Indikace Ă„Ĺ¤ekÄ‚Ë‡nÄ‚Â­ na odpovĂ„â€şĂ„Ĺą. */
+/* Indikace Ä‚â€žÄąÂ¤ekĂ„â€šĂ‹â€ˇnĂ„â€šĂ‚Â­ na odpovÄ‚â€žĂ˘â‚¬ĹźÄ‚â€žÄąÄ…. */
 function showLoading() {
   const chat = document.getElementById("chatSection");
 
@@ -256,7 +256,7 @@ function hideLoading() {
   loadingBubble = null;
 }
 
-/* OdeslÄ‚Ë‡nÄ‚Â­ zprÄ‚Ë‡vy na backend. */
+/* OdeslĂ„â€šĂ‹â€ˇnĂ„â€šĂ‚Â­ zprĂ„â€šĂ‹â€ˇvy na backend. */
 async function sendMessage() {
   const input = document.getElementById("messageInput");
   const message = input.value.trim();
@@ -299,7 +299,7 @@ document.getElementById("messageInput")
     if (e.key === "Enter") sendMessage();
   });
 
-/* Tilt efekt pro sklenĂ„â€şnÄ‚Â© bubliny. */
+/* Tilt efekt pro sklenÄ‚â€žĂ˘â‚¬ĹźnĂ„â€šĂ‚Â© bubliny. */
 
 function enableTiltEffects() {
   const elements = document.querySelectorAll(".tilt:not([data-tilt])");
@@ -336,14 +336,14 @@ function enableTiltEffects() {
   });
 }
 
-/* Po pÄąâ„˘idÄ‚Ë‡nÄ‚Â­ zprÄ‚Ë‡vy znovu zapne tilt efekt. */
+/* Po pĂ„Ä…Ă˘â€žËidĂ„â€šĂ‹â€ˇnĂ„â€šĂ‚Â­ zprĂ„â€šĂ‹â€ˇvy znovu zapne tilt efekt. */
 const originalAppendMessage = appendMessage;
 appendMessage = function(role, content) {
   originalAppendMessage(role, content);
   enableTiltEffects();
 };
 
-/* Inicializace efektÄąĹ» po naĂ„Ĺ¤tenÄ‚Â­ strÄ‚Ë‡nky. */
+/* Inicializace efektĂ„Ä…ÄąÂ» po naÄ‚â€žÄąÂ¤tenĂ„â€šĂ‚Â­ strĂ„â€šĂ‹â€ˇnky. */
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
   updateAmbientMotion();
