@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.67";
+const APP_VERSION = "v1.68";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -36,7 +36,6 @@ const loadingMessages = [
 "Už to voní skvěle...",
 "Chystám něco lahodného...",
 "Už to skoro můžeme servírovat..."
-
 ];
 
 let loadingBubble = null;
