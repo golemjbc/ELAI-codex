@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd -W)"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$REPO_ROOT/scripts/bump-version.ps1"
+git add index.html

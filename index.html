@@ -15,7 +15,7 @@
 
 
 /* ===========================
-   🌊 Animated Gradient Background
+   đźŚŠ Animated Gradient Background
 =========================== */
 body {
   margin: 0;
@@ -39,11 +39,11 @@ body {
 }
 
 /* ===========================
-   🧊 Vision Glass Ultra
+   đź§Š Vision Glass Ultra
 =========================== */
 .glass {
   position: relative;
-  background: rgba(255,255,255,0.04); /* velmi jemné */
+  background: rgba(255,255,255,0.04); /* velmi jemnĂ© */
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 26px;
 
@@ -69,14 +69,14 @@ body {
 
 
 /* ===========================
-   🫧 Timeline
+   đź«§ Timeline
 =========================== */
 .timeline-wrapper {
   position: relative;
   display: flex;
   align-items: flex-start;
   overflow-x: auto;
-  overflow-y: visible;   /* 👈 důležité */
+  overflow-y: visible;   /* đź‘ dĹŻleĹľitĂ© */
   scroll-snap-type: x proximity;
   padding: 0 24px;
   gap: 12px;
@@ -132,7 +132,7 @@ body {
 }
 
 /* ===========================
-   💎 FLOATING INPUT
+   đź’Ž FLOATING INPUT
 =========================== */
 .input-wrapper {
   position: fixed;
@@ -158,7 +158,7 @@ body {
 
 
 /* ===========================
-   ✨ Scrollbar
+   âś¨ Scrollbar
 =========================== */
 #chatSection::-webkit-scrollbar {
   width: 4px;
@@ -215,7 +215,7 @@ body {
 <div class="input-wrapper">
   <input id="messageInput"
          type="text"
-         placeholder="Tak co mi dneska naservíruješ?"
+         placeholder="Tak co mi dneska naservĂ­rujeĹˇ?"
          class="flex-1 bg-transparent text-zinc-200 px-12 py-2 text-sm focus:outline-none" />
 
     <button id="sendButton" onclick="sendMessage()"
@@ -236,11 +236,11 @@ body {
 
 <script>
 console.log("ELAI build:", new Date().toISOString());
-const APP_VERSION = "v1.34";
+const APP_VERSION = "v1.35";
 
 
 /* ===========================
-   🎥 3D TILT SYSTEM
+   đźŽĄ 3D TILT SYSTEM
 =========================== */
 
 function applyTilt(element) {
@@ -266,31 +266,31 @@ function applyTilt(element) {
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
 
-/* PŮVODNÍ FUNKCE JSOU ZACHOVÁNY POD TÍMTO ŘÁDKEM */
+/* PĹ®VODNĂŤ FUNKCE JSOU ZACHOVĂNY POD TĂŤMTO ĹĂDKEM */
 
 
 
 const loadingMessages = [
-"Zvyšuju tlak. Udržíš to?",
-"Teplota roste. A já to miluju.",
-"Ještě chvíli… a praskne to.",
-"Dusím tě napětím.",
-"Drž se. Bude to intenzivní.",
-"Tlak stoupá. Výsledek bude výbušný.",
-"Vařím to tak dlouho, až to přeteče.",
-"Míchám to tvrdě. A bez slitování.",
-"Cítíš to napětí?",
-"Ještě pár vteřin… a exploduje to.",
-"Zahřívám to na hranici únosnosti.",
-"Trochu vlhka nikdy neuškodí.",
-"Připrav se. Bude to silné.",
-"Napínám tě schválně.",
-"Hraju si s tlakem, dokud to nevystřelí.",
-"Dusím tě pomalu. Protože můžu.",
-"Ještě víc tepla… ještě víc napětí.",
-"Blížím se k vrcholu výpočtu.",
-"Tohle bude mít náboj.",
-"Chceš to rychle? Smůla."
+"ZvyĹˇuju tlak. UdrĹľĂ­Ĺˇ to?",
+"Teplota roste. A jĂˇ to miluju.",
+"JeĹˇtÄ› chvĂ­liâ€¦ a praskne to.",
+"DusĂ­m tÄ› napÄ›tĂ­m.",
+"DrĹľ se. Bude to intenzivnĂ­.",
+"Tlak stoupĂˇ. VĂ˝sledek bude vĂ˝buĹˇnĂ˝.",
+"VaĹ™Ă­m to tak dlouho, aĹľ to pĹ™eteÄŤe.",
+"MĂ­chĂˇm to tvrdÄ›. A bez slitovĂˇnĂ­.",
+"CĂ­tĂ­Ĺˇ to napÄ›tĂ­?",
+"JeĹˇtÄ› pĂˇr vteĹ™inâ€¦ a exploduje to.",
+"ZahĹ™Ă­vĂˇm to na hranici Ăşnosnosti.",
+"Trochu vlhka nikdy neuĹˇkodĂ­.",
+"PĹ™iprav se. Bude to silnĂ©.",
+"NapĂ­nĂˇm tÄ› schvĂˇlnÄ›.",
+"Hraju si s tlakem, dokud to nevystĹ™elĂ­.",
+"DusĂ­m tÄ› pomalu. ProtoĹľe mĹŻĹľu.",
+"JeĹˇtÄ› vĂ­c teplaâ€¦ jeĹˇtÄ› vĂ­c napÄ›tĂ­.",
+"BlĂ­ĹľĂ­m se k vrcholu vĂ˝poÄŤtu.",
+"Tohle bude mĂ­t nĂˇboj.",
+"ChceĹˇ to rychle? SmĹŻla."
 ];
 
 let loadingBubble = null;
@@ -365,8 +365,8 @@ function renderHistory(items) {
     }
   });
 
-  // 🔥 --- TADY JE JEDINÁ PŘIDANÁ VĚC ---
-  // spacer bublina na zítřek
+  // đź”Ą --- TADY JE JEDINĂ PĹIDANĂ VÄšC ---
+  // spacer bublina na zĂ­tĹ™ek
 
   const spacer = document.createElement("div");
   spacer.className = "timeline-bubble";
@@ -381,7 +381,7 @@ function renderHistory(items) {
 
   const spacerMeal = document.createElement("div");
   spacerMeal.className = "timeline-bubble-meal";
-  spacerMeal.innerText = "Těš se!";
+  spacerMeal.innerText = "TÄ›Ĺˇ se!";
 
   spacer.appendChild(spacerDate);
   spacer.appendChild(spacerMeal);
@@ -421,7 +421,7 @@ function updateTimelineScale(container) {
   });
 }
 
-/* SESSION + CHAT (nezměněno) */
+/* SESSION + CHAT (nezmÄ›nÄ›no) */
 async function loadSession() {
   try {
     const res = await fetch(`${API_BASE}/session`);
@@ -484,7 +484,7 @@ function setComposerDisabled(disabled) {
   }
 }
 
-/* LOADING (zachováno celé) */
+/* LOADING (zachovĂˇno celĂ©) */
 function showLoading() {
   const chat = document.getElementById("chatSection");
 
@@ -513,7 +513,7 @@ function hideLoading() {
   loadingBubble = null;
 }
 
-/* SEND (zachováno) */
+/* SEND (zachovĂˇno) */
 async function sendMessage() {
   const input = document.getElementById("messageInput");
   const message = input.value.trim();
@@ -538,13 +538,13 @@ async function sendMessage() {
     }
 
     const data = await res.json();
-    appendMessage("assistant", data.reply || "Backend vrátil prázdnou odpověď.");
+    appendMessage("assistant", data.reply || "Backend vrĂˇtil prĂˇzdnou odpovÄ›ÄŹ.");
     await loadHistory();
     setTimeout(scrollChatToBottom, 50);
 
   } catch (err) {
     console.error("sendMessage failed:", err);
-    appendMessage("assistant", "Backend teď neodpovídá. Zkus to prosím znovu za chvíli.");
+    appendMessage("assistant", "Backend teÄŹ neodpovĂ­dĂˇ. Zkus to prosĂ­m znovu za chvĂ­li.");
   } finally {
     hideLoading();
     setComposerDisabled(false);
@@ -595,14 +595,14 @@ function enableTiltEffects() {
   });
 }
 
-/* Re-apply tilt po každé nové zprávěf */
+/* Re-apply tilt po kaĹľdĂ© novĂ© zprĂˇvÄ›f */
 const originalAppendMessage = appendMessage;
 appendMessage = function(role, content) {
   originalAppendMessage(role, content);
   enableTiltEffects();
 };
 
-/* Inicializace při startu */
+/* Inicializace pĹ™i startu */
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
 });
