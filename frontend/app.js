@@ -1,6 +1,12 @@
-const APP_VERSION = "v1.74";
+const APP_VERSION = "v1.75";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
+
+// Klic funkce z Azure Portalu (Function App -> Functions -> App keys).
+// Bez nej Azure po zapnuti auth_level=FUNCTION vraci 401.
+const FUNCTION_KEY = "__DOPLNIT_KLIC_Z_AZURE__";
+
+const AUTH_HEADERS = { "x-functions-key": FUNCTION_KEY };
 
 
 /* Zpravy pro prubezne nacitani. */
@@ -49,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* Historie jidelnicku. */
 async function loadHistory() {
   try {
-    const res = await fetch(`${API_BASE}/history`);
+    const res = await fetch(`${API_BASE}/history`, { headers: AUTH_HEADERS });
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     const history = data.history || [];
@@ -188,7 +194,7 @@ function updateAmbientMotion() {
 /* Dnesni konverzace a vykresleni chatu. */
 async function loadSession() {
   try {
-    const res = await fetch(`${API_BASE}/session`);
+    const res = await fetch(`${API_BASE}/session`, { headers: AUTH_HEADERS });
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     const today = new Date().toISOString().slice(0,10);
@@ -285,7 +291,7 @@ async function sendMessage(customMessage) {
   try {
     const res = await fetch(`${API_BASE}/chat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...AUTH_HEADERS },
       body: JSON.stringify({ message })
     });
 

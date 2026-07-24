@@ -14,7 +14,7 @@ CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME", "elai-kontejner")
 # OpenAI klient
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@app.route(route="history", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
+@app.route(route="history", methods=["GET"], auth_level=func.AuthLevel.FUNCTION)
 def get_history(req: func.HttpRequest) -> func.HttpResponse:
     try:
         history_data = read_json_blob("history.json", {"history": []})
@@ -30,7 +30,7 @@ def get_history(req: func.HttpRequest) -> func.HttpResponse:
             status_code=500
         )
 
-@app.route(route="session", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
+@app.route(route="session", methods=["GET"], auth_level=func.AuthLevel.FUNCTION)
 def get_session(req: func.HttpRequest) -> func.HttpResponse:
     try:
         session_data = read_json_blob("session.json", {"sessions": []})
@@ -90,7 +90,7 @@ def write_json_blob(blob_name, data):
 # CHAT ENDPOINT
 # =========================
 
-@app.route(route="chat", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
+@app.route(route="chat", methods=["POST"], auth_level=func.AuthLevel.FUNCTION)
 def chat(req: func.HttpRequest) -> func.HttpResponse:
     try:
         # -------------------------
@@ -202,18 +202,31 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
         write_json_blob("session.json", session_data)
 
         # -------------------------
-        # 8) HISTORY ADD
+        # 8) MAIN ADD
         # -------------------------
-        if history_add:
-            history_data["history"].append(history_add)
-            write_json_blob("history.json", history_data)
+        # Zpracovano pred history_add, aby uz melo nove jidlo jmeno,
+        # pokud uzivatel v jedne zprave rekne "dal jsem si X poprve a bylo skvele".
+        if main_add:
+            existing_ids = {meal.get("id") for meal in main_data["meals"]}
+            if main_add.get("id") not in existing_ids:
+                main_data["meals"].append(main_add)
+                write_json_blob("main.json", main_data)
+            else:
+                logging.warning(f"main_add s jiz existujicim id ignorovan: {main_add.get('id')}")
 
         # -------------------------
-        # 9) MAIN ADD
+        # 9) HISTORY ADD
         # -------------------------
-        if main_add:
-            main_data["meals"].append(main_add)
-            write_json_blob("main.json", main_data)
+        if history_add:
+            meal = next(
+                (m for m in main_data["meals"] if m.get("id") == history_add.get("meal_id")),
+                None
+            )
+            if meal:
+                history_add["meal_name"] = meal.get("name")
+
+            history_data["history"].append(history_add)
+            write_json_blob("history.json", history_data)
 
         # -------------------------
         # 10) MAIN UPDATE NOTE
