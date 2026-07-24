@@ -2,12 +2,16 @@
 <html lang="cs">
 <head>
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#0b0f1a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>ELAI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="./styles.css">
@@ -20,9 +24,10 @@
 <div class="aurora-layer" aria-hidden="true"></div>
 
 <!-- Logo -->
-<header class="w-full flex justify-center leading-none pt-2">
+<header class="brand-header w-full flex flex-col items-center justify-center leading-none pt-3 pb-1">
   <img src="img/ELAI.png"
-     class="block max-w-[168px] w-full h-auto object-contain opacity-95 m-0 p-0" />
+     class="block max-w-[132px] w-full h-auto object-contain opacity-95 m-0 p-0" />
+  <p class="brand-tagline">tvůj chytrý jídelníček</p>
 </header>
 
 
@@ -50,11 +55,11 @@
     </button>
 
     <button id="sendButton" onclick="sendMessage()"
-            class="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 via-violet-600 to-indigo-700 text-white shadow-md hover:scale-105 transition">
+            class="send-button w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 via-violet-600 to-indigo-700 text-white shadow-md hover:scale-105 transition">
 
-      <svg xmlns="http://www.w3.org/2000/svg" 
+      <svg xmlns="http://www.w3.org/2000/svg"
           class="w-[18px] h-[18px]"
-          viewBox="0 0 24 24" 
+          viewBox="0 0 24 24"
           fill="currentColor">
         <path d="M3 20v-6l15-2-15-2V4l19 8-19 8z"/>
       </svg>
