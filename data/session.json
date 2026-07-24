@@ -1,0 +1,17 @@
+{
+  "sessions": [
+    {
+      "date": "2026-02-17",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Navrhni mi oběd bez masa."
+        },
+        {
+          "role": "assistant",
+          "content": "Můžeš zkusit rizoto nebo gnocchi."
+        }
+      ]
+    }
+  ]
+}

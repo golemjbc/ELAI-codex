@@ -1,0 +1,195 @@
+AI JÍDELNÍČEK – FINÁLNÍ ARCHITEKTURA (MVP VERZE)
+
+CÍL:
+Jednoduchá webová aplikace pro správu jídelníčku.
+AI pouze reaguje na dotazy.
+Backend nic nepočítá, jen předává data.
+Vše je uloženo v JSON souborech na Azure Blob Storage.
+
+------------------------------------------------------------
+1) TECHNOLOGIE
+------------------------------------------------------------
+
+Frontend:
+- Web aplikace (např. Next.js / React)
+- Chatové rozhraní
+
+Backend:
+- Azure Function (Node.js)
+- Zodpovědná pouze za:
+  - načtení JSON souborů
+  - sestavení promptu
+  - volání OpenAI API
+  - uložení nové zprávy do session
+
+Datové úložiště:
+- Azure Blob Storage
+- Pouze JSON soubory
+
+AI Model:
+- gpt-5-mini
+- Chat completion styl
+
+------------------------------------------------------------
+2) STRUKTURA SOUBORŮ (BLOB STORAGE)
+------------------------------------------------------------
+
+/main.json
+Obsahuje:
+- seznam všech jídel
+- možné přílohy
+- tagy
+- případně oblíbenost
+
+/history.json
+Obsahuje:
+- kompletní historii od začátku
+- datum
+- meal_id
+- příloha
+- poznámky
+
+/session_YYYY-MM-DD.json
+Obsahuje:
+- pouze dnešní konverzaci
+- posledních několik zpráv
+
+------------------------------------------------------------
+3) TOK JEDNOHO DOTAZU
+------------------------------------------------------------
+
+1. Frontend odešle dotaz.
+2. Azure Function:
+   - načte main.json (celý)
+   - načte history.json
+   - vybere posledních 10 jídel (backend nic nepočítá)
+   - načte dnešní session
+3. Backend sestaví prompt:
+   - system instrukce
+   - celý main.json (jako string)
+   - posledních 10 jídel
+   - dnešní konverzace
+   - aktuální dotaz
+4. Zavolá OpenAI (gpt-5-mini).
+5. Vrátí odpověď frontend.
+6. Uloží zprávy do session souboru.
+
+------------------------------------------------------------
+4) PRINCIPY
+------------------------------------------------------------
+
+- Backend nepočítá statistiky.
+- Backend nic nevyhodnocuje.
+- AI pracuje s dodanými daty.
+- Pokud AI navrhne něco špatně, uživatel ji opraví.
+- Nový den = nová session.
+
+------------------------------------------------------------
+5) SYSTEM PROMPT (ZÁKLAD)
+------------------------------------------------------------
+
+Jsi pomocník pro plánování jídel.
+Používej pouze jídla ze seznamu MAIN.
+Zohledni posledních 10 jídel.
+Snaž se neopakovat časté kombinace.
+Nevymýšlej jídla, která nejsou v seznamu.
+
+------------------------------------------------------------
+6) FILOZOFIE ŘEŠENÍ
+------------------------------------------------------------
+
+- Minimalistická architektura.
+- Žádné výpočty v backendu.
+- Žádná databáze.
+- Pouze JSON + AI.
+- Jednoduché, rychlé, funkční MVP.
+
+------------------------------------------------------------
+AI JÍDELNÍČEK – DOPLNĚK ARCHITEKTURY
+SESSION CACHE (KOMUNIKACE)
+
+------------------------------------------------------------
+7) SESSION CACHE (KOMUNIKACE)
+------------------------------------------------------------
+
+CÍL:
+Ukládat chatovou komunikaci do jednoho souboru.
+Nevytvářet nové soubory pro každý den.
+Udržet systém jednoduchý a přehledný.
+
+Datový soubor:
+/session.json
+
+------------------------------------------------------------
+
+STRUKTURA SOUBORU:
+
+{
+  "sessions": [
+    {
+      "date": "YYYY-MM-DD",
+      "messages": [
+        {
+          "role": "user",
+          "content": "text zprávy"
+        },
+        {
+          "role": "assistant",
+          "content": "text odpovědi"
+        }
+      ]
+    }
+  ]
+}
+
+------------------------------------------------------------
+
+PRINCIP FUNGOVÁNÍ:
+
+1. Backend načte session.json.
+2. Zkontroluje, zda existuje session s dnešním datem.
+3. Pokud neexistuje:
+   - vytvoří nový objekt s dnešním datem
+   - přidá jej do pole sessions.
+4. Přidá novou zprávu do pole messages.
+5. Uloží celý soubor zpět do Azure Blob Storage.
+
+------------------------------------------------------------
+
+PRINCIP PŘI VOLÁNÍ AI:
+
+- Backend neposílá celé pole sessions.
+- Vybere pouze session s dnešním datem.
+- Z ní vezme posledních X zpráv (např. 10–20).
+- Tyto zprávy vloží do promptu pro model.
+
+Např.:
+Použít pouze posledních 10 zpráv z messages.
+
+------------------------------------------------------------
+
+OMEZENÍ SYSTÉMU:
+
+- Backend nepočítá statistiky.
+- Backend neanalyzuje komunikaci.
+- Backend pouze čte, přidává a ukládá JSON.
+- Nový den = nový objekt uvnitř sessions pole.
+
+------------------------------------------------------------
+
+VOLITELNÉ ROZŠÍŘENÍ (není nutné pro MVP):
+
+Do message objektu lze přidat:
+
+"created_at": "YYYY-MM-DDTHH:mm:ssZ"
+
+To umožní přesné časové řazení zpráv.
+
+------------------------------------------------------------
+
+ARCHITEKTURA ZŮSTÁVÁ:
+
+- minimalistická
+- bez databáze
+- bez generování mnoha souborů
+- plně kompatibilní s filozofií JSON + AI

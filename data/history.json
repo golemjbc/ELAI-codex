@@ -1,0 +1,16 @@
+{
+  "history": [
+    {
+      "date": "2026-02-17",
+      "meal_id": "rizoto",
+      "note": "",
+      "type": "obed"
+    },
+    {
+      "date": "2026-02-18",
+      "meal_id": "pizza",
+      "note": "rychlá večeře",
+      "type": "vecere"
+    }
+  ]
+}

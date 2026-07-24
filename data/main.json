@@ -1,0 +1,63 @@
+{
+  "meals": [
+
+    { "id": "sekana", "name": "Sekaná", "tags": ["maso", "česká klasika", "pečené"] },
+    { "id": "rizek", "name": "Řízek", "tags": ["maso", "smažené", "česká klasika"] },
+    { "id": "kure", "name": "Kuře", "tags": ["maso"] },
+    { "id": "pecene_kure", "name": "Pečené kuře", "tags": ["maso", "pečené"] },
+    { "id": "pekingske_kure", "name": "Pekingské kuře", "tags": ["maso", "asijské"] },
+    { "id": "kure_s_nadivkou", "name": "Kuře s nádivkou", "tags": ["maso", "víkend"] },
+    { "id": "kureci_salat", "name": "Kuřecí salát", "tags": ["maso", "lehké"] },
+    { "id": "losos", "name": "Losos", "tags": ["ryba", "lehké"] },
+    { "id": "rybi_prsty", "name": "Rybí prsty", "tags": ["ryba", "rychlé"] },
+    { "id": "karbanatky", "name": "Karbanátky", "tags": ["maso", "česká klasika"] },
+    { "id": "parky", "name": "Párky", "tags": ["maso", "rychlé"] },
+    { "id": "klobasa", "name": "Klobása", "tags": ["maso", "rychlé"] },
+    { "id": "kebab", "name": "Kebab", "tags": ["maso", "rychlé"] },
+    { "id": "spizy", "name": "Špízy", "tags": ["maso", "gril"] },
+    { "id": "jatra_na_grilu", "name": "Játra na grilu", "tags": ["maso", "gril"] },
+    { "id": "hoveci_po_burgundsku", "name": "Hovězí po burgundsku", "tags": ["maso", "víkend"] },
+    { "id": "gulas", "name": "Guláš", "tags": ["maso", "česká klasika"] },
+    { "id": "kari", "name": "Kari", "tags": ["maso", "asijské"] },
+
+    { "id": "spagety", "name": "Špagety", "tags": ["těstoviny", "rychlé"] },
+    { "id": "testoviny", "name": "Těstoviny", "tags": ["těstoviny"] },
+    { "id": "lasagne", "name": "Lasagne", "tags": ["těstoviny", "zapečené"] },
+    { "id": "rizoto", "name": "Rizoto", "tags": ["rýže", "rychlé"] },
+    { "id": "gnocchi", "name": "Gnocchi", "tags": ["těstoviny"] },
+    { "id": "borsc", "name": "Boršč", "tags": ["polévka"] },
+
+    { "id": "zapecene_brambory", "name": "Zapečené brambory", "tags": ["brambory", "zapečené"] },
+    { "id": "bramboraky", "name": "Bramboráky", "tags": ["brambory", "česká klasika"] },
+    { "id": "brambory_s_masem", "name": "Brambory s masem", "tags": ["maso", "brambory"] },
+
+    { "id": "pizza", "name": "Pizza", "tags": ["rychlé", "italské"] },
+    { "id": "burgery", "name": "Burgery", "tags": ["maso", "rychlé"] },
+    { "id": "hamburger", "name": "Hamburger", "tags": ["maso", "rychlé"] },
+    { "id": "tortilla", "name": "Tortilla", "tags": ["rychlé"] },
+    { "id": "quesadilla", "name": "Quesadilla", "tags": ["rychlé"] },
+    { "id": "toasty", "name": "Toasty", "tags": ["rychlé"] },
+    { "id": "topinky", "name": "Topinky", "tags": ["rychlé"] },
+    { "id": "chlebicky", "name": "Chlebíčky", "tags": ["rychlé", "studené"] },
+
+    { "id": "rajcatovy_salat", "name": "Rajčatový salát", "tags": ["salát", "lehké"] },
+    { "id": "salat_caprese", "name": "Salát caprese", "tags": ["salát", "lehké", "italské"] },
+    { "id": "coleslaw", "name": "Coleslaw", "tags": ["salát"] },
+    { "id": "sopak", "name": "Šopák", "tags": ["salát"] },
+
+    { "id": "omeleta", "name": "Omeleta", "tags": ["rychlé", "snídaně"] },
+    { "id": "vajicka", "name": "Vajíčka", "tags": ["rychlé", "snídaně"] },
+    { "id": "palacinky", "name": "Palačinky", "tags": ["sladké"] },
+    { "id": "zemlovka", "name": "Žemlovka", "tags": ["sladké"] },
+    { "id": "halusky", "name": "Halušky", "tags": ["česká klasika"] },
+    { "id": "knedliky", "name": "Knedlíky", "tags": ["česká klasika"] },
+    { "id": "plnene_knedliky", "name": "Plněné knedlíky", "tags": ["česká klasika"] },
+    { "id": "ovocne_knedliky", "name": "Ovocné knedlíky", "tags": ["sladké"] },
+    { "id": "vdolky", "name": "Vdolky", "tags": ["sladké"] },
+
+    { "id": "housky", "name": "Housky", "tags": ["pečivo", "rychlé"] },
+    { "id": "krabi_pomazanka", "name": "Krabí pomazánka", "tags": ["pomazánka"] },
+    { "id": "syrova_pomazanka", "name": "Sýrová pomazánka", "tags": ["pomazánka"] }
+
+  ]
+}
