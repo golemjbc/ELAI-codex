@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.70";
+const APP_VERSION = "v1.71";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -209,20 +209,14 @@ function renderChat(messages) {
 function appendMessage(role, content) {
   const chat = document.getElementById("chatSection");
   const wrapper = document.createElement("div");
-  wrapper.className = role === "user"
-    ? "flex justify-end"
-    : "flex justify-start";
+  wrapper.className = role === "user" ? "msg-row msg-row-user" : "msg-row msg-row-assistant";
 
   const bubble = document.createElement("div");
-  bubble.className = `${
-    role === "assistant" ? "assistant-bubble glass text-zinc-100 tilt" : "user-bubble text-white"
-  }
-    max-w-[70%] px-5 py-3
-    animate-[fadeIn_0.3s_ease]
-    transition-all duration-300 ease-out whitespace-pre-wrap break-words`;
+  bubble.className = role === "assistant"
+    ? "bubble bubble-assistant glass tilt fade-in"
+    : "bubble bubble-user fade-in";
   bubble.textContent = content;
   wrapper.appendChild(bubble);
-
 
   chat.appendChild(wrapper);
 }
@@ -237,13 +231,8 @@ function setComposerDisabled(disabled) {
   const button = document.getElementById("sendButton");
 
   input.disabled = disabled;
-  input.classList.toggle("opacity-60", disabled);
-  input.classList.toggle("cursor-not-allowed", disabled);
-
   if (button) {
     button.disabled = disabled;
-    button.classList.toggle("opacity-70", disabled);
-    button.classList.toggle("cursor-not-allowed", disabled);
   }
 }
 
@@ -252,10 +241,10 @@ function showLoading() {
   const chat = document.getElementById("chatSection");
 
   loadingBubble = document.createElement("div");
-  loadingBubble.className = "flex justify-start";
+  loadingBubble.className = "msg-row msg-row-assistant";
 
   const bubbleInner = document.createElement("div");
-  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-zinc-300";
+  bubbleInner.className = "bubble bubble-loading glass";
 
   bubbleInner.innerText =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];

@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#0b0f1a">
+<meta name="theme-color" content="#0a0a0d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta charset="UTF-8" />
@@ -13,57 +13,42 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="./styles.css?v=1.70">
-<script src="./app.js?v=1.70" defer></script>
+<link rel="stylesheet" href="./styles.css?v=1.71">
+<script src="./app.js?v=1.71" defer></script>
 </head>
 
-<body class="flex flex-col h-screen text-zinc-100 overflow-hidden">
+<body>
 
 <div class="wallpaper-layer" aria-hidden="true"></div>
 <div class="aurora-layer" aria-hidden="true"></div>
 
 <!-- Logo -->
-<header class="brand-header w-full flex flex-col items-center justify-center leading-none pt-3 pb-1">
-  <img src="img/ELAI.png"
-     class="block max-w-[132px] w-full h-auto object-contain opacity-95 m-0 p-0" />
+<header class="brand-header">
+  <img src="img/ELAI.png" class="brand-logo" alt="ELAI" />
   <p class="brand-tagline">tvůj chytrý jídelníček</p>
 </header>
-
 
 <!-- Časová osa -->
 <div class="timeline-wrapper" id="historySection">
 </div>
 
 <!-- Chat -->
-<div id="chatSection"
-     class="flex-1 overflow-y-auto px-4 sm:px-6 pt-4 space-y-5 max-w-2xl mx-auto">
-</div>
-
-
+<div id="chatSection"></div>
 
 <!-- Plovoucí vstup -->
 <div class="input-wrapper">
   <input id="messageInput"
          type="text"
-         placeholder="Tak co mi dneska naserv&#237;ruje&#353;?"
-         class="flex-1 bg-transparent text-zinc-100 px-6 py-3 text-[15px] focus:outline-none" />
+         placeholder="Tak co mi dneska naserv&#237;ruje&#353;?" />
 
-    <button onclick="tryLuck()"
-            class="w-11 h-11 flex items-center justify-center rounded-full overflow-hidden hover:scale-105 transition">
-      <img src="img/elai-button.png" class="w-full h-full object-cover rounded-full" />
+    <button onclick="tryLuck()" class="icon-btn" aria-label="Náhodný nápad">
+      <img src="img/elai-button.png" class="icon-btn-img" alt="" />
     </button>
 
-    <button id="sendButton" onclick="sendMessage()"
-            class="send-button w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-md hover:scale-105 transition">
-
-      <svg xmlns="http://www.w3.org/2000/svg"
-          class="w-[18px] h-[18px]"
-          viewBox="0 0 24 24"
-          fill="currentColor">
+    <button id="sendButton" onclick="sendMessage()" class="send-button" aria-label="Odeslat">
+      <svg xmlns="http://www.w3.org/2000/svg" class="send-icon" viewBox="0 0 24 24" fill="currentColor">
         <path d="M3 20v-6l15-2-15-2V4l19 8-19 8z"/>
       </svg>
-
     </button>
 
 </div>
