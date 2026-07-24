@@ -1,10 +1,12 @@
-const APP_VERSION = "v1.75";
+const APP_VERSION = "v1.77";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
 // Klic funkce z Azure Portalu (Function App -> Functions -> App keys).
 // Bez nej Azure po zapnuti auth_level=FUNCTION vraci 401.
-const FUNCTION_KEY = "__DOPLNIT_KLIC_Z_AZURE__";
+// Skutecna hodnota se sem vklada az pri nasazeni pres GitHub Actions
+// (repo secret FUNCTION_KEY), nikdy neni soucasti gitu.
+const FUNCTION_KEY = "__FUNCTION_KEY__";
 
 const AUTH_HEADERS = { "x-functions-key": FUNCTION_KEY };
 
