@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.71";
+const APP_VERSION = "v1.72";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -316,6 +316,35 @@ document.getElementById("messageInput")
     if (e.key === "Enter") sendMessage();
   });
 
+/* Reakce na vysunutou klavesnici na mobilu (posun vstupni listy + doscrollovani chatu). */
+function setupKeyboardHandling() {
+  const inputWrapper = document.querySelector(".input-wrapper");
+  const input = document.getElementById("messageInput");
+  const vv = window.visualViewport;
+  if (!inputWrapper || !vv) return;
+
+  function update() {
+    const keyboardInset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    inputWrapper.style.bottom = `${16 + keyboardInset}px`;
+  }
+
+  vv.addEventListener("resize", update);
+  vv.addEventListener("scroll", update);
+  update();
+
+  if (input) {
+    input.addEventListener("focus", () => {
+      setTimeout(() => {
+        update();
+        scrollChatToBottom();
+      }, 300);
+    });
+    input.addEventListener("blur", () => {
+      setTimeout(update, 300);
+    });
+  }
+}
+
 /* Tilt efekt pro sklenene bubliny. */
 
 function enableTiltEffects() {
@@ -364,6 +393,7 @@ appendMessage = function(role, content) {
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
   updateAmbientMotion();
+  setupKeyboardHandling();
 
   window.addEventListener("scroll", updateAmbientMotion, { passive: true });
 

@@ -15,6 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   background:
@@ -274,6 +275,7 @@ body > .aurora-layer {
   -webkit-backdrop-filter: blur(16px);
   padding: 8px 10px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+  transition: bottom 0.15s ease;
 }
 
 #messageInput {
