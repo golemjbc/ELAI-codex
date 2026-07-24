@@ -3,6 +3,7 @@ import logging
 import os
 import json
 from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor
 from azure.storage.blob import BlobServiceClient
 from azure.core.exceptions import ResourceNotFoundError
 from openai import OpenAI
@@ -51,10 +52,19 @@ def get_session(req: func.HttpRequest) -> func.HttpResponse:
 # Blob helper
 # =========================
 
+_container_client = None
+
+
 def get_container_client():
-    connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    return blob_service_client.get_container_client(CONTAINER_NAME)
+    # Znovupouzity klient napric requesty v ramci stejneho teploho behu
+    # funkce - misto navazovani noveho spojeni na Storage pri kazdem
+    # cteni/zapisu.
+    global _container_client
+    if _container_client is None:
+        connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        _container_client = blob_service_client.get_container_client(CONTAINER_NAME)
+    return _container_client
 
 
 def read_blob_text(blob_name):
@@ -140,13 +150,18 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
         today = datetime.now().strftime("%Y-%m-%d")
 
         # -------------------------
-        # 2) NAČTENÍ DAT
+        # 2) NAČTENÍ DAT (souběžně, misto 4 cteni za sebou)
         # -------------------------
-        prompt_text = read_blob_text("prompt.txt") or ""
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            prompt_future = executor.submit(read_blob_text, "prompt.txt")
+            main_future = executor.submit(read_json_blob, "main.json", {"meals": []})
+            history_future = executor.submit(read_json_blob, "history.json", {"history": []})
+            session_future = executor.submit(read_json_blob, "session.json", {"sessions": []})
 
-        main_data = read_json_blob("main.json", {"meals": []})
-        history_data = read_json_blob("history.json", {"history": []})
-        session_data = read_json_blob("session.json", {"sessions": []})
+            prompt_text = prompt_future.result() or ""
+            main_data = main_future.result()
+            history_data = history_future.result()
+            session_data = session_future.result()
 
         # -------------------------
         # 3) SESSION LOGIKA
