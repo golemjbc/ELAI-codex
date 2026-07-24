@@ -2,7 +2,7 @@ import azure.functions as func
 import logging
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from azure.storage.blob import BlobServiceClient
 from azure.core.exceptions import ResourceNotFoundError
 from openai import OpenAI
@@ -87,6 +87,37 @@ def write_json_blob(blob_name, data):
 
 
 # =========================
+# Validace akci od AI
+# =========================
+# AI musi vracet presne dany tvar objektu. Pokud neco vrati spatne
+# (napr. pole misto objektu), radeji akci zahodime nez abychom
+# poskodili data v history.json / main.json.
+
+def is_valid_history_add(item):
+    return (
+        isinstance(item, dict)
+        and isinstance(item.get("date"), str)
+        and isinstance(item.get("meal_id"), str)
+    )
+
+
+def is_valid_main_add(item):
+    return (
+        isinstance(item, dict)
+        and isinstance(item.get("id"), str)
+        and isinstance(item.get("name"), str)
+    )
+
+
+def is_valid_main_update_note(item):
+    return (
+        isinstance(item, dict)
+        and isinstance(item.get("meal_id"), str)
+        and isinstance(item.get("note"), str)
+    )
+
+
+# =========================
 # CHAT ENDPOINT
 # =========================
 
@@ -161,7 +192,9 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
         response = client.chat.completions.create(
             model="gpt-5-mini",
             messages=messages,
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
+            reasoning_effort="minimal",
+            verbosity="low"
         )
 
         ai_text = response.choices[0].message.content.strip()
@@ -199,6 +232,14 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
             "content": reply
         })
 
+        # Session soubor by jinak rostl navzdy - stare konverzace uz appka
+        # nikde nepouziva (do promptu jde jen dnesni session), takze je
+        # pred ulozenim oriznem. Drzi to soubor mensi a zapis/cteni rychlejsi.
+        cutoff = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+        session_data["sessions"] = [
+            s for s in session_data["sessions"] if s.get("date", "") >= cutoff
+        ]
+
         write_json_blob("session.json", session_data)
 
         # -------------------------
@@ -207,40 +248,49 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
         # Zpracovano pred history_add, aby uz melo nove jidlo jmeno,
         # pokud uzivatel v jedne zprave rekne "dal jsem si X poprve a bylo skvele".
         if main_add:
-            existing_ids = {meal.get("id") for meal in main_data["meals"]}
-            if main_add.get("id") not in existing_ids:
-                main_data["meals"].append(main_add)
-                write_json_blob("main.json", main_data)
+            if not is_valid_main_add(main_add):
+                logging.warning(f"main_add ma neplatny tvar, ignorovan: {main_add!r}")
             else:
-                logging.warning(f"main_add s jiz existujicim id ignorovan: {main_add.get('id')}")
+                existing_ids = {meal.get("id") for meal in main_data["meals"]}
+                if main_add.get("id") not in existing_ids:
+                    main_data["meals"].append(main_add)
+                    write_json_blob("main.json", main_data)
+                else:
+                    logging.warning(f"main_add s jiz existujicim id ignorovan: {main_add.get('id')}")
 
         # -------------------------
         # 9) HISTORY ADD
         # -------------------------
         if history_add:
-            meal = next(
-                (m for m in main_data["meals"] if m.get("id") == history_add.get("meal_id")),
-                None
-            )
-            if meal:
-                history_add["meal_name"] = meal.get("name")
+            if not is_valid_history_add(history_add):
+                logging.warning(f"history_add ma neplatny tvar, ignorovan: {history_add!r}")
+            else:
+                meal = next(
+                    (m for m in main_data["meals"] if m.get("id") == history_add.get("meal_id")),
+                    None
+                )
+                if meal:
+                    history_add["meal_name"] = meal.get("name")
 
-            history_data["history"].append(history_add)
-            write_json_blob("history.json", history_data)
+                history_data["history"].append(history_add)
+                write_json_blob("history.json", history_data)
 
         # -------------------------
         # 10) MAIN UPDATE NOTE
         # -------------------------
         if main_update_note:
-            meal_id = main_update_note.get("meal_id")
-            note = main_update_note.get("note")
+            if not is_valid_main_update_note(main_update_note):
+                logging.warning(f"main_update_note ma neplatny tvar, ignorovan: {main_update_note!r}")
+            else:
+                meal_id = main_update_note.get("meal_id")
+                note = main_update_note.get("note")
 
-            for meal in main_data["meals"]:
-                if meal.get("id") == meal_id:
-                    meal.setdefault("notes", []).append(note)
-                    break
+                for meal in main_data["meals"]:
+                    if meal.get("id") == meal_id:
+                        meal.setdefault("notes", []).append(note)
+                        break
 
-            write_json_blob("main.json", main_data)
+                write_json_blob("main.json", main_data)
 
         # -------------------------
         # 11) RESPONSE
