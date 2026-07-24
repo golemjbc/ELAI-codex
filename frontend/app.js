@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.72";
+const APP_VERSION = "v1.73";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -325,7 +325,7 @@ function setupKeyboardHandling() {
 
   function update() {
     const keyboardInset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-    inputWrapper.style.bottom = `${16 + keyboardInset}px`;
+    inputWrapper.style.setProperty("--kb-inset", `${keyboardInset}px`);
   }
 
   vv.addEventListener("resize", update);

@@ -8,6 +8,8 @@ html {
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 body {
@@ -17,6 +19,7 @@ body {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  padding-top: var(--safe-top);
   font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   background:
     radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.07), transparent 45%),
@@ -259,7 +262,7 @@ body > .aurora-layer {
 
 .input-wrapper {
   position: fixed;
-  bottom: 16px;
+  bottom: calc(16px + var(--safe-bottom) + var(--kb-inset, 0px));
   left: 50%;
   transform: translateX(-50%);
   width: 94%;
