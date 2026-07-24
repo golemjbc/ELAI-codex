@@ -13,12 +13,10 @@ body {
   min-height: 100vh;
   font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   background:
-    radial-gradient(circle at 15% 0%, rgba(236, 72, 153, 0.09), transparent 40%),
-    radial-gradient(circle at 85% 0%, rgba(139, 92, 246, 0.09), transparent 42%),
-    radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.10), transparent 55%),
-    linear-gradient(180deg, #0b0f1a 0%, #0d1220 45%, #121a2e 100%);
+    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.07), transparent 45%),
+    linear-gradient(180deg, #0a0a0d 0%, #0d0d12 45%, #101015 100%);
   background-attachment: fixed;
-  color: #f7f2ff;
+  color: #ececef;
   overflow-x: hidden;
   position: relative;
 }
@@ -32,8 +30,8 @@ body > .wallpaper-layer {
   background-repeat: repeat;
   background-size: 900px 900px;
   background-position: center;
-  opacity: 0.07;
-  filter: saturate(1.05) brightness(1.1);
+  opacity: 0.04;
+  filter: grayscale(0.6) brightness(1.1);
   mix-blend-mode: soft-light;
 }
 
@@ -43,12 +41,10 @@ body > .aurora-layer {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(circle at 20% 22%, rgba(244, 114, 182, 0.10), transparent 22%),
-    radial-gradient(circle at 80% 18%, rgba(167, 139, 250, 0.09), transparent 24%),
-    radial-gradient(circle at 50% 85%, rgba(99, 102, 241, 0.10), transparent 26%);
-  filter: blur(44px) saturate(1.05);
+    radial-gradient(circle at 50% 15%, rgba(139, 92, 246, 0.10), transparent 30%);
+  filter: blur(50px);
   opacity: 0.5;
-  animation: floatAurora 20s ease-in-out infinite alternate;
+  animation: floatAurora 24s ease-in-out infinite alternate;
   transform: translate3d(0, 0, 0);
 }
 
@@ -64,23 +60,21 @@ body > .aurora-layer {
   margin: 0;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: rgba(244, 231, 255, 0.45);
+  color: rgba(228, 228, 231, 0.38);
 }
 
 /* ---------- Glass surfaces ---------- */
 
 .glass {
   position: relative;
-  background: rgba(22, 26, 46, 0.42);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  backdrop-filter: blur(16px) saturate(1.05);
-  -webkit-backdrop-filter: blur(16px) saturate(1.05);
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: rgba(24, 24, 27, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.20);
   overflow: hidden;
 }
 
@@ -108,20 +102,19 @@ body > .aurora-layer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   transition: transform 0.25s ease, opacity 0.25s ease, border-color 0.25s ease;
   transform-origin: center;
-  opacity: 0.42;
+  opacity: 0.4;
 }
 
 .timeline-bubble-date {
   font-size: 10px;
   font-weight: 500;
-  opacity: 0.6;
+  opacity: 0.55;
   letter-spacing: 0.03em;
+  color: #d4d4d8;
 }
 
 .timeline-bubble-meal {
@@ -132,12 +125,12 @@ body > .aurora-layer {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 110px;
+  color: #f4f4f5;
 }
 
 .timeline-bubble.today {
-  border-color: rgba(244, 114, 182, 0.45);
-  background: linear-gradient(135deg, rgba(244, 114, 182, 0.12), rgba(129, 140, 248, 0.10));
-  box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.20);
+  border-color: rgba(167, 139, 250, 0.55);
+  background: rgba(139, 92, 246, 0.08);
 }
 
 /* ---------- Input bar ---------- */
@@ -153,21 +146,21 @@ body > .aurora-layer {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(20, 24, 42, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(20, 20, 24, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  backdrop-filter: blur(18px) saturate(1.05);
-  -webkit-backdrop-filter: blur(18px) saturate(1.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 8px 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
 }
 
 .input-wrapper input::placeholder {
-  color: rgba(244, 231, 255, 0.5);
+  color: rgba(228, 228, 231, 0.42);
 }
 
 .send-button {
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.22);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.28);
 }
 
 /* ---------- Chat bubbles ---------- */
@@ -177,7 +170,7 @@ body > .aurora-layer {
 }
 
 #chatSection::-webkit-scrollbar-thumb {
-  background: rgba(216, 180, 254, 0.35);
+  background: rgba(161, 161, 170, 0.3);
   border-radius: 10px;
 }
 
@@ -191,9 +184,9 @@ body > .aurora-layer {
 }
 
 .user-bubble {
-  background: linear-gradient(135deg, #ec4899, #8b5cf6 55%, #6366f1);
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
   border-radius: 22px 22px 6px 22px;
-  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.18);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.20);
 }
 
 .assistant-bubble {
@@ -214,7 +207,7 @@ body > .aurora-layer {
   text-align: center;
   font-size: 14px;
   line-height: 1.5;
-  color: rgba(244, 231, 255, 0.38);
+  color: rgba(228, 228, 231, 0.34);
 }
 
 @keyframes floatAurora {
@@ -238,7 +231,7 @@ body > .aurora-layer {
 }
 
 header img {
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.20));
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.24));
 }
 
 #appVersion {
@@ -246,7 +239,7 @@ header img {
   bottom: 4px;
   right: 8px;
   font-size: 10px;
-  opacity: 0.35;
+  opacity: 0.3;
   pointer-events: none;
   z-index: 9999;
 }

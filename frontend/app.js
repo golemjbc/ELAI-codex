@@ -215,7 +215,7 @@ function appendMessage(role, content) {
 
   const bubble = document.createElement("div");
   bubble.className = `${
-    role === "assistant" ? "assistant-bubble glass text-fuchsia-50 tilt" : "user-bubble text-white"
+    role === "assistant" ? "assistant-bubble glass text-zinc-100 tilt" : "user-bubble text-white"
   }
     max-w-[70%] px-5 py-3
     animate-[fadeIn_0.3s_ease]
@@ -255,7 +255,7 @@ function showLoading() {
   loadingBubble.className = "flex justify-start";
 
   const bubbleInner = document.createElement("div");
-  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-fuchsia-100";
+  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-zinc-300";
 
   bubbleInner.innerText =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
