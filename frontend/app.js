@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.91";
+const APP_VERSION = "v1.92";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -58,7 +58,22 @@ const taglineMessages = [
   "dokážu odolat všemu, kromě pokušení",
   "jez, abys žil, nežij, abys jedl",
   "život je krátký, dezert si dej",
-  "kdo se bojí kalorií, nikdy neochutná život"
+  "kdo se bojí kalorií, nikdy neochutná život",
+  "co sníš ve stoje, se nepočítá",
+  "cizí talíř má vždycky míň kalorií",
+  "čokoláda řeší devadesát procent problémů",
+  "první pravidlo diety: o dietě nemluv",
+  "dieta začíná v pondělí, končí taky v pondělí",
+  "poslední kousek dortu nemá kalorie, to je fyzika",
+  "hlad je nejlepší koření",
+  "lidé, co milují jíst, jsou vždycky ti nejlepší",
+  "nelze dobře myslet ani spát, pokud jsi dobře nejedl",
+  "není lásky upřímnější než láska k jídlu",
+  "posilovna počká, guláš ne",
+  "žádný talíř neumřel nadarmo",
+  "trénuju hlavně zvedání vidličky",
+  "štíhlá linie je jen jeden z tvarů štěstí",
+  "nikdo nelituje dortu, jen prázdného talíře"
 ];
 
 /* Vzory pro hlasky s realnym napadem z tveho seznamu jidel.
