@@ -1,0 +1,288 @@
+{
+  "history": [
+    {
+      "date": "2026-02-16",
+      "meal_id": "kure_s_nadivkou",
+      "type": "vecere",
+      "note": "jen nádivka"
+    },
+    {
+      "date": "2026-02-15",
+      "meal_id": "vajicka",
+      "type": "snidane",
+      "note": ""
+    },
+    {
+      "date": "2026-02-14",
+      "meal_id": "rolada",
+      "type": "vecere",
+      "note": "prasácká roláda od Káči"
+    },
+    {
+      "date": "2026-02-17",
+      "meal_id": "meal_b4c7d2e9",
+      "meal_name": "Hemenex",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-17",
+      "meal_id": "nadivka",
+      "meal_name": "Nádivka",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-02-18",
+      "meal_id": "wrap_s_kurecim_masem_zeleninou_a_dresinkem",
+      "meal_name": "Wrap s kuřecím masem, zeleninou a dresinkem",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-02-19",
+      "meal_id": "prejedeny",
+      "meal_name": "Přejedený",
+      "type": "vecere",
+      "note": "uživatel hlásí přejedení"
+    },
+    {
+      "date": "2026-02-19",
+      "meal_id": "wrap_s_kurecim_masem_zeleninou_a_dresinkem",
+      "meal_name": "Wrap s kuřecím masem, zeleninou a dresinkem",
+      "type": "obed",
+      "note": "stejné jako včera"
+    },
+    {
+      "date": "2026-02-19",
+      "meal_id": "tatarak",
+      "meal_name": "Tatarák",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-20",
+      "meal_id": "zapecena_tortila_se_sunkou_a_syrem",
+      "meal_name": "Zapečená tortila se šunkou a sýrem",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-02-21",
+      "meal_id": "bramborove_placky",
+      "meal_name": "Bramborové placky",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-22",
+      "meal_id": "bramborove_placky",
+      "meal_name": "Bramborové placky",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-22",
+      "meal_id": "testoviny_s_cervenou_omackou",
+      "meal_name": "Těstoviny s červenou omáčkou",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-23",
+      "meal_id": "testoviny_s_cervenou_omackou",
+      "meal_name": "Těstoviny s červenou omáčkou",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-02-23",
+      "meal_id": "housky",
+      "meal_name": "Housky",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-23",
+      "meal_id": "rajcatovy_salat_s_mozarellou",
+      "meal_name": "Rajčatový salát s mozarellou",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-24",
+      "meal_id": "hemenex",
+      "meal_name": "Hemenex",
+      "type": "obed",
+      "note": "s chlebem"
+    },
+    {
+      "date": "2026-02-24",
+      "meal_id": "kruti_rolada_s_bramborami",
+      "meal_name": "Krůtí roláda s bramborami",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-02-26",
+      "meal_id": "bunbo_nam_bo_podle_receptu_erik_haibazi",
+      "meal_name": "bunbo nam Bo podle receptu Erik haibazi",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-02-28",
+      "meal_id": "testoviny_s_cervenou_omackou",
+      "meal_name": "Těstoviny s červenou omáčkou",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-09",
+      "meal_id": "losos_s_bramborovou_kasi",
+      "meal_name": "Losos s bramborovou kaší",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-10",
+      "meal_id": "poke_s_lososem",
+      "meal_name": "Poke s lososem",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-11",
+      "meal_id": "pizza",
+      "meal_name": "Pizza",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-12",
+      "meal_id": "burger_s_vejcem",
+      "meal_name": "Burger s vejcem",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-12",
+      "meal_id": "housky",
+      "meal_name": "Housky",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-12",
+      "meal_id": "rajcata_s_mozarellou",
+      "meal_name": "Rajčata s mozarellou",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-13",
+      "meal_id": "tortilla_s_kurecim_masem",
+      "meal_name": "Tortilla s kuřecím masem",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-14",
+      "meal_id": "tortilla_s_kurecim_masem",
+      "meal_name": "Tortilla s kuřecím masem",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-23",
+      "meal_id": "rizoto",
+      "meal_name": "Rizoto",
+      "type": "obed",
+      "note": "je moc dobré"
+    },
+    {
+      "date": "2026-04-22",
+      "meal_id": "losos",
+      "meal_name": "Losos",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-24",
+      "meal_id": "carbonara",
+      "meal_name": "Carbonara",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-25",
+      "meal_id": "salat_caprese",
+      "meal_name": "Salát caprese",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-25",
+      "meal_id": "burty_na_ohni",
+      "meal_name": "Buřty na ohni",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-04-27",
+      "meal_id": "leco",
+      "meal_name": "Lečo",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-26",
+      "meal_id": "toasty",
+      "meal_name": "Toasty",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-25",
+      "meal_id": "pecene_kure",
+      "meal_name": "Pečené kuře",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-18",
+      "meal_id": "pecene_kure",
+      "meal_name": "Pečené kuře",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-25",
+      "meal_id": "testoviny_aglio_olio",
+      "meal_name": "Těstoviny aglio olio",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-21",
+      "meal_id": "lasagne",
+      "meal_name": "Lasagne",
+      "type": "vecere",
+      "note": ""
+    },
+    {
+      "date": "2026-04-26",
+      "meal_id": "salat_caprese",
+      "meal_name": "Salát caprese",
+      "type": "obed",
+      "note": ""
+    },
+    {
+      "date": "2026-07-24",
+      "meal_id": "housky",
+      "meal_name": "Housky",
+      "type": "vecere",
+      "note": "s máslem"
+    }
+  ]
+}

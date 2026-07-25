@@ -1,0 +1,41 @@
+{
+  "sessions": [
+    {
+      "date": "2026-07-24",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Housky s máslem dnes k večeři"
+        },
+        {
+          "role": "assistant",
+          "content": "Housky s máslem dnes k večeři — zní to hezky. Chceš, abych to zapsala do historie jako dnešní večeři?"
+        },
+        {
+          "role": "user",
+          "content": "Zápis to do historie"
+        },
+        {
+          "role": "assistant",
+          "content": "Hotovo — zapsala jsem Housky (s máslem) jako dnešní večeři."
+        },
+        {
+          "role": "user",
+          "content": "Co mám dnes uvařit?"
+        },
+        {
+          "role": "assistant",
+          "content": "Můžu navrhnout: Řízek, Rizoto nebo Salát caprese. Máš chuť spíš na maso, něco lehkého nebo rychlou večeři?"
+        },
+        {
+          "role": "user",
+          "content": "Mám. Chuť na banán"
+        },
+        {
+          "role": "assistant",
+          "content": "To je krásně — banán je skvělá volba. Můžu navrhnout banán s jogurtem a medem, banánové palačinky nebo banánové smoothie; chceš recept na některou z nich?"
+        }
+      ]
+    }
+  ]
+}

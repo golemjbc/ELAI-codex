@@ -1,6 +1,14 @@
-const APP_VERSION = "v1.69";
+const APP_VERSION = "v1.78";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
+
+// Klic funkce z Azure Portalu (Function App -> Functions -> App keys).
+// Bez nej Azure po zapnuti auth_level=FUNCTION vraci 401.
+// Skutecna hodnota se sem vklada az pri nasazeni pres GitHub Actions
+// (repo secret FUNCTION_KEY), nikdy neni soucasti gitu.
+const FUNCTION_KEY = "__FUNCTION_KEY__";
+
+const AUTH_HEADERS = { "x-functions-key": FUNCTION_KEY };
 
 
 /* Zpravy pro prubezne nacitani. */
@@ -49,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* Historie jidelnicku. */
 async function loadHistory() {
   try {
-    const res = await fetch(`${API_BASE}/history`);
+    const res = await fetch(`${API_BASE}/history`, { headers: AUTH_HEADERS });
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     const history = data.history || [];
@@ -188,7 +196,7 @@ function updateAmbientMotion() {
 /* Dnesni konverzace a vykresleni chatu. */
 async function loadSession() {
   try {
-    const res = await fetch(`${API_BASE}/session`);
+    const res = await fetch(`${API_BASE}/session`, { headers: AUTH_HEADERS });
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     const today = new Date().toISOString().slice(0,10);
@@ -209,20 +217,14 @@ function renderChat(messages) {
 function appendMessage(role, content) {
   const chat = document.getElementById("chatSection");
   const wrapper = document.createElement("div");
-  wrapper.className = role === "user"
-    ? "flex justify-end"
-    : "flex justify-start";
+  wrapper.className = role === "user" ? "msg-row msg-row-user" : "msg-row msg-row-assistant";
 
   const bubble = document.createElement("div");
-  bubble.className = `${
-    role === "assistant" ? "assistant-bubble glass text-fuchsia-50 tilt" : "user-bubble text-white"
-  }
-    max-w-[70%] px-5 py-3
-    animate-[fadeIn_0.3s_ease]
-    transition-all duration-300 ease-out whitespace-pre-wrap break-words`;
+  bubble.className = role === "assistant"
+    ? "bubble bubble-assistant glass tilt fade-in"
+    : "bubble bubble-user fade-in";
   bubble.textContent = content;
   wrapper.appendChild(bubble);
-
 
   chat.appendChild(wrapper);
 }
@@ -237,13 +239,8 @@ function setComposerDisabled(disabled) {
   const button = document.getElementById("sendButton");
 
   input.disabled = disabled;
-  input.classList.toggle("opacity-60", disabled);
-  input.classList.toggle("cursor-not-allowed", disabled);
-
   if (button) {
     button.disabled = disabled;
-    button.classList.toggle("opacity-70", disabled);
-    button.classList.toggle("cursor-not-allowed", disabled);
   }
 }
 
@@ -252,10 +249,10 @@ function showLoading() {
   const chat = document.getElementById("chatSection");
 
   loadingBubble = document.createElement("div");
-  loadingBubble.className = "flex justify-start";
+  loadingBubble.className = "msg-row msg-row-assistant";
 
   const bubbleInner = document.createElement("div");
-  bubbleInner.className = "glass px-5 py-3 rounded-3xl italic text-fuchsia-100";
+  bubbleInner.className = "bubble bubble-loading glass";
 
   bubbleInner.innerText =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
@@ -296,7 +293,7 @@ async function sendMessage(customMessage) {
   try {
     const res = await fetch(`${API_BASE}/chat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...AUTH_HEADERS },
       body: JSON.stringify({ message })
     });
 
@@ -326,6 +323,35 @@ document.getElementById("messageInput")
   .addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
   });
+
+/* Reakce na vysunutou klavesnici na mobilu (posun vstupni listy + doscrollovani chatu). */
+function setupKeyboardHandling() {
+  const inputWrapper = document.querySelector(".input-wrapper");
+  const input = document.getElementById("messageInput");
+  const vv = window.visualViewport;
+  if (!inputWrapper || !vv) return;
+
+  function update() {
+    const keyboardInset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    inputWrapper.style.setProperty("--kb-inset", `${keyboardInset}px`);
+  }
+
+  vv.addEventListener("resize", update);
+  vv.addEventListener("scroll", update);
+  update();
+
+  if (input) {
+    input.addEventListener("focus", () => {
+      setTimeout(() => {
+        update();
+        scrollChatToBottom();
+      }, 300);
+    });
+    input.addEventListener("blur", () => {
+      setTimeout(update, 300);
+    });
+  }
+}
 
 /* Tilt efekt pro sklenene bubliny. */
 
@@ -375,6 +401,7 @@ appendMessage = function(role, content) {
 document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
   updateAmbientMotion();
+  setupKeyboardHandling();
 
   window.addEventListener("scroll", updateAmbientMotion, { passive: true });
 

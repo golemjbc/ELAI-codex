@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0a0a0d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+<title>ELAI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="./styles.css?v=1.78">
+<script src="./app.js?v=1.78" defer></script>
+</head>
+
+<body>
+
+<div class="wallpaper-layer" aria-hidden="true"></div>
+<div class="aurora-layer" aria-hidden="true"></div>
+
+<!-- Logo -->
+<header class="brand-header">
+  <img src="img/ELAI.png" class="brand-logo" alt="ELAI" />
+  <p class="brand-tagline">tvůj chytrý jídelníček</p>
+</header>
+
+<!-- Časová osa -->
+<div class="timeline-wrapper" id="historySection">
+</div>
+
+<!-- Chat -->
+<div id="chatSection"></div>
+
+<!-- Plovoucí vstup -->
+<div class="input-wrapper">
+  <input id="messageInput"
+         type="text"
+         placeholder="Tak co mi dneska naserv&#237;ruje&#353;?" />
+
+    <button onclick="tryLuck()" class="icon-btn" aria-label="Náhodný nápad">
+      <img src="img/elai-button.png" class="icon-btn-img" alt="" />
+    </button>
+
+    <button id="sendButton" onclick="sendMessage()" class="send-button" aria-label="Odeslat">
+      <svg xmlns="http://www.w3.org/2000/svg" class="send-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 20v-6l15-2-15-2V4l19 8-19 8z"/>
+      </svg>
+    </button>
+
+</div>
+
+<div id="appVersion"></div>
+
+</body>
+</html>
