@@ -240,7 +240,7 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
         main_update_note = actions.get("main_update_note")
 
         # -------------------------
-        # 7) ULOŽENÍ SESSION
+        # 7) PŘÍPRAVA SESSION (jen v paměti, zápis až na konci)
         # -------------------------
         todays_session["messages"].append({
             "role": "assistant",
@@ -255,13 +255,13 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
             s for s in session_data["sessions"] if s.get("date", "") >= cutoff
         ]
 
-        write_json_blob("session.json", session_data)
-
         # -------------------------
-        # 8) MAIN ADD
+        # 8) MAIN ADD (jen v paměti)
         # -------------------------
         # Zpracovano pred history_add, aby uz melo nove jidlo jmeno,
         # pokud uzivatel v jedne zprave rekne "dal jsem si X poprve a bylo skvele".
+        main_changed = False
+
         if main_add:
             if not is_valid_main_add(main_add):
                 logging.warning(f"main_add ma neplatny tvar, ignorovan: {main_add!r}")
@@ -269,13 +269,15 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
                 existing_ids = {meal.get("id") for meal in main_data["meals"]}
                 if main_add.get("id") not in existing_ids:
                     main_data["meals"].append(main_add)
-                    write_json_blob("main.json", main_data)
+                    main_changed = True
                 else:
                     logging.warning(f"main_add s jiz existujicim id ignorovan: {main_add.get('id')}")
 
         # -------------------------
-        # 9) HISTORY ADD
+        # 9) HISTORY ADD (jen v paměti)
         # -------------------------
+        history_changed = False
+
         if history_add:
             if not is_valid_history_add(history_add):
                 logging.warning(f"history_add ma neplatny tvar, ignorovan: {history_add!r}")
@@ -288,10 +290,10 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
                     history_add["meal_name"] = meal.get("name")
 
                 history_data["history"].append(history_add)
-                write_json_blob("history.json", history_data)
+                history_changed = True
 
         # -------------------------
-        # 10) MAIN UPDATE NOTE
+        # 10) MAIN UPDATE NOTE (jen v paměti)
         # -------------------------
         if main_update_note:
             if not is_valid_main_update_note(main_update_note):
@@ -303,9 +305,25 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
                 for meal in main_data["meals"]:
                     if meal.get("id") == meal_id:
                         meal.setdefault("notes", []).append(note)
+                        main_changed = True
                         break
 
-                write_json_blob("main.json", main_data)
+        # -------------------------
+        # 10b) ZÁPIS ZMĚN (souběžně, misto za sebou)
+        # -------------------------
+        # main.json se zapise nejvyse jednou, i kdyz ho zmenily obe akce
+        # (main_add i main_update_note) - drive se pri soubehu obou zapisoval
+        # zbytecne dvakrat.
+        write_jobs = [("session.json", session_data)]
+        if main_changed:
+            write_jobs.append(("main.json", main_data))
+        if history_changed:
+            write_jobs.append(("history.json", history_data))
+
+        with ThreadPoolExecutor(max_workers=len(write_jobs)) as executor:
+            futures = [executor.submit(write_json_blob, name, data) for name, data in write_jobs]
+            for f in futures:
+                f.result()
 
         # -------------------------
         # 11) RESPONSE
