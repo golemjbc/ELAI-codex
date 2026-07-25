@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.89";
+const APP_VERSION = "v1.90";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -15,56 +15,89 @@ const AUTH_HEADERS = { "x-functions-key": FUNCTION_KEY };
 
 const taglineMessages = [
   "tvůj chytrý jídelníček",
-  "řekni mi, co jsi jedl, zapíšu to",
-  "zeptej se na nápad k obědu",
-  "podrž logo pro vyčištění appky",
-  "ťukni na kartu dne pro přehled",
-  "napiš mi i poznámku k jídlu",
-  "zeptej se, co jsi jedl minulý týden",
-  "řekni si o návrh večeře",
-  "sjeď historii a podívej se zpátky",
-  "zapomněl jsi na oběd? řekni mi to",
-  "kalorie se počítají až zítra",
-  "zelenina taky umí být drzá",
-  "talíř bez chuti? to tu neznáme",
-  "hlad je jen výmluva pro dobrotu",
-  "bramborák je vždy správná volba",
-  "pizza k snídani? proč ne",
-  "omáčka řeší většinu problémů",
-  "sacher nebo salát, rozhodni se rychle",
-  "hlad nepočká, ale já jo",
-  "jedna knedla se počítá jako zelenina",
-  "každé jídlo si zaslouží poznámku",
-  "dezert je vlastně druhá večeře",
-  "polévka léčí i pondělky",
+  "řekni mi, co jsi jedl, a bez keců",
+  "zeptej se na oběd, nebo hladověj dál",
+  "podrž logo, když potřebuješ restart",
+  "ťukni na dnešní kartu, ukážu ti to",
+  "poznámku si piš, paměť mi nevěř",
+  "co bylo minulý týden? zeptej se",
+  "chceš návrh večeře? tak si řekni",
+  "historie nelže, i když bys chtěl",
+  "vynechal jsi oběd, že jo",
+  "kalorie dneska nepočítám, klid",
+  "zelenina umí být drzá stejně jako já",
+  "nudný talíř sem nepatří",
+  "hlad je jen tvoje výmluva",
+  "bramborák vyhrává, o tom se nediskutuje",
+  "pizza k snídani je taky jídlo",
+  "omáčka spraví i špatný den",
+  "sacher, nebo salát? rozhodni se",
+  "hlad nepočká, tak si pospěš",
+  "knedlík se dneska počítá za zeleninu",
+  "každé jídlo si zaslouží zápis",
+  "dezert je druhá večeře, fakt",
+  "polévka spraví i pondělí",
   "tuk je jen chuť s velkým srdcem",
-  "čokoláda je základní potravina",
-  "rajče je ovoce, klid",
+  "čokoláda je základní potravina, tečka",
+  "rajče je ovoce, žádné diskuze",
   "hranolky jsou zelenina v přestrojení",
-  "jídlo bez sýra je jen návrh",
-  "i chleba má svůj den",
-  "každý oběd píše svůj příběh",
-  "dobrá večeře stojí za zápis",
-  "gulášovka řeší vše"
+  "bez sýra to není jídlo, je to návrh",
+  "i chleba má svůj den slávy",
+  "dobrá večeře stojí za zápis do historie",
+  "gulášovka řeší úplně všechno",
+  "vím přesně, co jsi včera jedl"
 ];
 
+/* Vzory pro hlasky s realnym napadem z tveho seznamu jidel. */
+const mealTaglineTemplates = [
+  "co třeba {meal}? bojíš se?",
+  "{meal}. řekni to nahlas a jdi na to",
+  "znáš {meal}, tak si ho dej",
+  "{meal} tě volá, zvedni to",
+  "{meal}, nebo nuda. vyber si",
+  "dal by sis {meal}? přiznej to",
+  "{meal} by ti dneska slušelo",
+  "tip ode mě: {meal}"
+];
+
+let savedMeals = [];
 let taglineInterval = null;
+
+async function loadMeals() {
+  try {
+    const res = await fetch(`${API_BASE}/main`, { headers: AUTH_HEADERS });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    savedMeals = (data.meals || []).map(m => m.name).filter(Boolean);
+  } catch (err) {
+    console.error("loadMeals failed:", err);
+  }
+}
+
+function nextTaglineText() {
+  if (savedMeals.length && Math.random() < 0.35) {
+    const meal = savedMeals[Math.floor(Math.random() * savedMeals.length)];
+    const template = mealTaglineTemplates[Math.floor(Math.random() * mealTaglineTemplates.length)];
+    return template.replace("{meal}", meal);
+  }
+  return taglineMessages[Math.floor(Math.random() * taglineMessages.length)];
+}
 
 function startTaglineRotation() {
   const tagline = document.querySelector(".brand-tagline");
   if (!tagline) return;
 
-  let lastIndex = 0;
+  let lastText = tagline.textContent;
 
   taglineInterval = setInterval(() => {
     tagline.style.opacity = "0";
     setTimeout(() => {
-      let index;
+      let next;
       do {
-        index = Math.floor(Math.random() * taglineMessages.length);
-      } while (index === lastIndex);
-      lastIndex = index;
-      tagline.textContent = taglineMessages[index];
+        next = nextTaglineText();
+      } while (next === lastText);
+      lastText = next;
+      tagline.textContent = next;
       tagline.style.opacity = "";
     }, 900);
   }, 7000);
@@ -112,6 +145,7 @@ let loadingInterval = null;
 document.addEventListener("DOMContentLoaded", async () => {
   await loadHistory();
   await loadSession();
+  loadMeals();
 });
 
 /* Historie jidelnicku. */

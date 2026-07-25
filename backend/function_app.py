@@ -47,6 +47,22 @@ def get_session(req: func.HttpRequest) -> func.HttpResponse:
             status_code=500
         )
 
+@app.route(route="main", methods=["GET"], auth_level=func.AuthLevel.FUNCTION)
+def get_main(req: func.HttpRequest) -> func.HttpResponse:
+    try:
+        main_data = read_json_blob("main.json", {"meals": []})
+        return func.HttpResponse(
+            json.dumps(main_data, ensure_ascii=False),
+            status_code=200,
+            mimetype="application/json"
+        )
+    except Exception as e:
+        logging.error(str(e))
+        return func.HttpResponse(
+            "Chyba načítání jídel",
+            status_code=500
+        )
+
 
 # =========================
 # Blob helper
