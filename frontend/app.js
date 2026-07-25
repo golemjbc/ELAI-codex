@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.83";
+const APP_VERSION = "v1.84";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -449,10 +449,14 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
 
-/* Skryty trik: 2 tuknuti na logo do 600ms vynuti aktualizaci appky. */
+/* Skryty trik: podrzeni prstu na logu vycisti cache appky.
+   Zamerne appku samu nerestartuje - na nekterych mobilech
+   (nainstalovana ikona na plose) programovy reload zpusoboval
+   rozhozene rozlozeni hlavicky. Rucni zavreni/otevreni appky
+   je spolehlive, tak o to po vycisteni pozadame uzivatele. */
 async function forceUpdate() {
   const tagline = document.querySelector(".brand-tagline");
-  if (tagline) tagline.textContent = "aktualizuji...";
+  if (tagline) tagline.textContent = "čistím...";
 
   try {
     if ('serviceWorker' in navigator) {
@@ -464,9 +468,7 @@ async function forceUpdate() {
       await Promise.all(keys.map(k => caches.delete(k)));
     }
   } finally {
-    // Cisty reload() muze na mobilu porad sahnout do HTTP cache
-    // prohlizece - novy query string to spolehlive obejde.
-    location.href = location.pathname + "?fresh=" + Date.now();
+    if (tagline) tagline.textContent = "hotovo, appku teď zavři a znovu otevři";
   }
 }
 
