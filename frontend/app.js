@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.80";
+const APP_VERSION = "v1.81";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -448,3 +448,37 @@ document.getElementById("appVersion").textContent = APP_VERSION;
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
+
+/* Skryty trik: 2 tuknuti na logo do 600ms vynuti aktualizaci appky. */
+async function forceUpdate() {
+  const tagline = document.querySelector(".brand-tagline");
+  if (tagline) tagline.textContent = "aktualizuji...";
+
+  try {
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+    }
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+    }
+  } finally {
+    location.reload();
+  }
+}
+
+(function setupForceUpdateTap() {
+  const logo = document.querySelector(".brand-logo");
+  if (!logo) return;
+
+  let lastTap = 0;
+
+  logo.addEventListener("click", () => {
+    const now = Date.now();
+    if (now - lastTap < 600) {
+      forceUpdate();
+    }
+    lastTap = now;
+  });
+})();
