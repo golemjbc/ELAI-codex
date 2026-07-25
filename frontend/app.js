@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.84";
+const APP_VERSION = "v1.85";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -158,7 +158,13 @@ function renderHistory(items) {
 
     if (day.date === today) {
       setTimeout(() => {
-        card.scrollIntoView({ inline: "center", behavior: "auto" });
+        // Rucni vypocet scrollLeft misto scrollIntoView - ta umi za
+        // urcitych okolnosti (pomale prvni nacteni) posunout i predky
+        // mimo tenhle kontejner (klidne cely dokument), coz na mobilu
+        // vypadalo jako "ujeté" logo nahore.
+        container.scrollLeft =
+          card.offsetLeft + card.offsetWidth / 2 - container.offsetWidth / 2;
+        updateTimelineScale(container);
       }, 0);
     }
   });
