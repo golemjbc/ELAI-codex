@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.86";
+const APP_VERSION = "v1.87";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -9,6 +9,37 @@ const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.
 const FUNCTION_KEY = "__FUNCTION_KEY__";
 
 const AUTH_HEADERS = { "x-functions-key": FUNCTION_KEY };
+
+
+/* Rotujici hlasky pod logem - tipy k appce a drobne vtipky o jidle. */
+
+const taglineMessages = [
+  "tvůj chytrý jídelníček",
+  "řekni mi, co jsi jedl/a, zapíšu to",
+  "zeptej se na nápad k obědu",
+  "podrž logo pro vyčištění appky",
+  "zelenina taky umí být drzá",
+  "kalorie se počítají až zítra",
+  "talíř bez chuti? to tu neznáme",
+  "hlad je jen výmluva pro dobrotu",
+  "ťukni na kartu dne pro přehled"
+];
+
+let taglineInterval = null;
+
+function startTaglineRotation() {
+  const tagline = document.querySelector(".brand-tagline");
+  if (!tagline) return;
+
+  let index = 0;
+  taglineInterval = setInterval(() => {
+    index = (index + 1) % taglineMessages.length;
+    tagline.classList.remove("fade-in");
+    void tagline.offsetWidth;
+    tagline.textContent = taglineMessages[index];
+    tagline.classList.add("fade-in");
+  }, 5000);
+}
 
 
 /* Zpravy pro prubezne nacitani. */
@@ -432,6 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
   enableTiltEffects();
   updateAmbientMotion();
   setupKeyboardHandling();
+  startTaglineRotation();
 
   window.addEventListener("scroll", updateAmbientMotion, { passive: true });
 
@@ -459,6 +491,7 @@ if ('serviceWorker' in navigator) {
    restartuje. (Drivejsi "ujete logo" zpusoboval jiny bug ve scrollovani
    casove osy, uz opraveny - restart appky s tim nesouvisel.) */
 async function forceUpdate() {
+  if (taglineInterval) clearInterval(taglineInterval);
   const tagline = document.querySelector(".brand-tagline");
   if (tagline) tagline.textContent = "aktualizuji...";
 
