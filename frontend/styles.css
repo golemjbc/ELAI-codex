@@ -97,6 +97,11 @@ body > .aurora-layer {
   opacity: 0.95;
   margin: 0;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.24));
+  /* Bez tohoto mobilni prohlizec bere 2 rychla tuknuti jako gesto
+     "přiblížit", coz vizualne "odjede" cely obrazek. */
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .brand-tagline {

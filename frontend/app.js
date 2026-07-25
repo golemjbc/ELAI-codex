@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.81";
+const APP_VERSION = "v1.82";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -464,7 +464,9 @@ async function forceUpdate() {
       await Promise.all(keys.map(k => caches.delete(k)));
     }
   } finally {
-    location.reload();
+    // Cisty reload() muze na mobilu porad sahnout do HTTP cache
+    // prohlizece - novy query string to spolehlive obejde.
+    location.href = location.pathname + "?fresh=" + Date.now();
   }
 }
 

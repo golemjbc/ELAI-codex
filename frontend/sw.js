@@ -1,4 +1,4 @@
-const VERSION = "1.81";
+const VERSION = "1.82";
 const CACHE_NAME = `elai-shell-${VERSION}`;
 
 const SHELL_FILES = [
@@ -39,9 +39,10 @@ self.addEventListener("fetch", event => {
     (request.headers.get("accept") || "").includes("text/html");
 
   if (isHtml) {
-    // HTML stranka: vzdy nejdriv zkusit sit, at se nezasekne stara verze v kesi.
+    // HTML stranka: vzdy nejdriv zkusit sit (cache: no-store, aby nas
+    // neobelstila HTTP cache prohlizece), at se nezasekne stara verze.
     event.respondWith(
-      fetch(request)
+      fetch(request, { cache: "no-store" })
         .then(response => {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
