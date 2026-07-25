@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.78";
+const APP_VERSION = "v1.79";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -75,66 +75,83 @@ function filterLast14Days(history) {
   });
 }
 
+const MEAL_TYPE_LABELS = { snidane: "Snídaně", obed: "Oběd", vecere: "Večeře" };
+const MEAL_TYPE_ORDER = { snidane: 0, obed: 1, vecere: 2 };
+const WEEKDAY_LABELS = ["Ne", "Po", "Út", "St", "Čt", "Pá", "So"];
+
+function formatDayLabel(dateStr) {
+  const d = new Date(dateStr + "T00:00:00");
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((d - today) / 86400000);
+
+  if (diffDays === 0) return "Dnes";
+  if (diffDays === -1) return "Včera";
+  if (diffDays === 1) return "Zítra";
+  return `${WEEKDAY_LABELS[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.`;
+}
+
+function groupHistoryByDate(items) {
+  const byDate = new Map();
+  items.forEach(item => {
+    if (!byDate.has(item.date)) byDate.set(item.date, []);
+    byDate.get(item.date).push(item);
+  });
+
+  return Array.from(byDate.entries())
+    .map(([date, meals]) => ({
+      date,
+      meals: meals.sort((a, b) =>
+        (MEAL_TYPE_ORDER[a.type] ?? 9) - (MEAL_TYPE_ORDER[b.type] ?? 9)
+      )
+    }))
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+}
+
 function renderHistory(items) {
   const container = document.getElementById("historySection");
   container.innerHTML = "";
 
   if (!items.length) return;
 
-  const today = new Date().toISOString().slice(0,10);
-  items.sort((a,b)=> new Date(a.date) - new Date(b.date));
+  const today = new Date().toISOString().slice(0, 10);
+  const days = groupHistoryByDate(items);
 
-  items.forEach(item => {
-
-    const bubble = document.createElement("div");
-    bubble.className = "timeline-bubble";
-
-    if (item.date === today) {
-      bubble.classList.add("today");
-    }
+  days.forEach(day => {
+    const card = document.createElement("div");
+    card.className = "day-card";
+    if (day.date === today) card.classList.add("today");
 
     const dateDiv = document.createElement("div");
-    dateDiv.className = "timeline-bubble-date";
-    dateDiv.innerText = item.date;
+    dateDiv.className = "day-card-date";
+    dateDiv.innerText = formatDayLabel(day.date);
+    card.appendChild(dateDiv);
 
-    const mealDiv = document.createElement("div");
-    mealDiv.className = "timeline-bubble-meal";
-    mealDiv.innerText = item.meal_name || item.meal_id;
+    day.meals.forEach(meal => {
+      const mealRow = document.createElement("div");
+      mealRow.className = "day-card-meal";
 
-    bubble.appendChild(dateDiv);
-    bubble.appendChild(mealDiv);
-    container.appendChild(bubble);
+      const typeSpan = document.createElement("span");
+      typeSpan.className = "day-card-meal-type";
+      typeSpan.innerText = MEAL_TYPE_LABELS[meal.type] || meal.type || "";
 
-    if (item.date === today) {
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "day-card-meal-name";
+      nameSpan.innerText = meal.meal_name || meal.meal_id;
+
+      mealRow.appendChild(typeSpan);
+      mealRow.appendChild(nameSpan);
+      card.appendChild(mealRow);
+    });
+
+    container.appendChild(card);
+
+    if (day.date === today) {
       setTimeout(() => {
-        bubble.scrollIntoView({
-          inline: "center",
-          behavior: "auto"
-        });
+        card.scrollIntoView({ inline: "center", behavior: "auto" });
       }, 0);
     }
   });
-
-  // Prida jemnou bublinu pro zitrejsi den.
-
-  const spacer = document.createElement("div");
-  spacer.className = "timeline-bubble";
-  spacer.style.opacity = "0.15";
-
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const spacerDate = document.createElement("div");
-  spacerDate.className = "timeline-bubble-date";
-  spacerDate.innerText = tomorrow.toISOString().slice(0,10);
-
-  const spacerMeal = document.createElement("div");
-  spacerMeal.className = "timeline-bubble-meal";
-  spacerMeal.innerText = "Těš se!";
-
-  spacer.appendChild(spacerDate);
-  spacer.appendChild(spacerMeal);
-  container.appendChild(spacer);
 
   updateTimelineScale(container);
 }
@@ -142,23 +159,20 @@ function renderHistory(items) {
 
 /* Hloubkovy efekt casove osy. */
 function updateTimelineScale(container) {
-  const bubbles = container.querySelectorAll(".timeline-bubble");
+  const cards = container.querySelectorAll(".day-card");
   const center = container.scrollLeft + container.offsetWidth / 2;
 
-  bubbles.forEach(bubble => {
-    const bubbleCenter =
-      bubble.offsetLeft + bubble.offsetWidth / 2;
-
-    const distance = Math.abs(center - bubbleCenter);
+  cards.forEach(card => {
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+    const distance = Math.abs(center - cardCenter);
     const maxDistance = container.offsetWidth / 2;
-
     const ratio = Math.max(0, 1 - distance / maxDistance);
 
-    const scale = 0.7 + ratio * 0.5;
-    const opacity = 0.2 + ratio * 0.8;
+    const scale = 0.85 + ratio * 0.15;
+    const opacity = 0.35 + ratio * 0.65;
 
-    bubble.style.transform = `scale(${scale})`;
-    bubble.style.opacity = opacity;
+    card.style.transform = `scale(${scale})`;
+    card.style.opacity = opacity;
   });
 }
 
