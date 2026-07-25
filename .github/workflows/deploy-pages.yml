@@ -30,9 +30,9 @@ jobs:
 
       - name: Sestaveni s tajnym klicem
         run: |
-          mkdir -p build/frontend
-          cp -r frontend/. build/frontend/
-          sed -i "s|__FUNCTION_KEY__|${{ secrets.FUNCTION_KEY }}|g" build/frontend/app.js
+          mkdir -p build
+          cp -r frontend/. build/
+          sed -i "s|__FUNCTION_KEY__|${{ secrets.FUNCTION_KEY }}|g" build/app.js
 
       - name: Upload artefaktu pro Pages
         uses: actions/upload-pages-artifact@v3
