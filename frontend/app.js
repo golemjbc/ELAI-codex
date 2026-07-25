@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.79";
+const APP_VERSION = "v1.80";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -112,10 +112,13 @@ function renderHistory(items) {
   const container = document.getElementById("historySection");
   container.innerHTML = "";
 
-  if (!items.length) return;
-
   const today = new Date().toISOString().slice(0, 10);
   const days = groupHistoryByDate(items);
+
+  if (!days.some(day => day.date === today)) {
+    days.push({ date: today, meals: [] });
+    days.sort((a, b) => new Date(a.date) - new Date(b.date));
+  }
 
   days.forEach(day => {
     const card = document.createElement("div");
@@ -126,6 +129,13 @@ function renderHistory(items) {
     dateDiv.className = "day-card-date";
     dateDiv.innerText = formatDayLabel(day.date);
     card.appendChild(dateDiv);
+
+    if (!day.meals.length) {
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "day-card-empty";
+      emptyDiv.innerText = "Zatím nic";
+      card.appendChild(emptyDiv);
+    }
 
     day.meals.forEach(meal => {
       const mealRow = document.createElement("div");
