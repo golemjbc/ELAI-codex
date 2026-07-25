@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.88";
+const APP_VERSION = "v1.89";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -18,11 +18,34 @@ const taglineMessages = [
   "řekni mi, co jsi jedl, zapíšu to",
   "zeptej se na nápad k obědu",
   "podrž logo pro vyčištění appky",
-  "zelenina taky umí být drzá",
+  "ťukni na kartu dne pro přehled",
+  "napiš mi i poznámku k jídlu",
+  "zeptej se, co jsi jedl minulý týden",
+  "řekni si o návrh večeře",
+  "sjeď historii a podívej se zpátky",
+  "zapomněl jsi na oběd? řekni mi to",
   "kalorie se počítají až zítra",
+  "zelenina taky umí být drzá",
   "talíř bez chuti? to tu neznáme",
   "hlad je jen výmluva pro dobrotu",
-  "ťukni na kartu dne pro přehled"
+  "bramborák je vždy správná volba",
+  "pizza k snídani? proč ne",
+  "omáčka řeší většinu problémů",
+  "sacher nebo salát, rozhodni se rychle",
+  "hlad nepočká, ale já jo",
+  "jedna knedla se počítá jako zelenina",
+  "každé jídlo si zaslouží poznámku",
+  "dezert je vlastně druhá večeře",
+  "polévka léčí i pondělky",
+  "tuk je jen chuť s velkým srdcem",
+  "čokoláda je základní potravina",
+  "rajče je ovoce, klid",
+  "hranolky jsou zelenina v přestrojení",
+  "jídlo bez sýra je jen návrh",
+  "i chleba má svůj den",
+  "každý oběd píše svůj příběh",
+  "dobrá večeře stojí za zápis",
+  "gulášovka řeší vše"
 ];
 
 let taglineInterval = null;
@@ -31,11 +54,16 @@ function startTaglineRotation() {
   const tagline = document.querySelector(".brand-tagline");
   if (!tagline) return;
 
-  let index = 0;
+  let lastIndex = 0;
+
   taglineInterval = setInterval(() => {
     tagline.style.opacity = "0";
     setTimeout(() => {
-      index = (index + 1) % taglineMessages.length;
+      let index;
+      do {
+        index = Math.floor(Math.random() * taglineMessages.length);
+      } while (index === lastIndex);
+      lastIndex = index;
       tagline.textContent = taglineMessages[index];
       tagline.style.opacity = "";
     }, 900);
