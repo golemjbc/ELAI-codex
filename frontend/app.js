@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.82";
+const APP_VERSION = "v1.83";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -470,17 +470,29 @@ async function forceUpdate() {
   }
 }
 
-(function setupForceUpdateTap() {
+(function setupForceUpdateHold() {
   const logo = document.querySelector(".brand-logo");
   if (!logo) return;
 
-  let lastTap = 0;
+  let holdTimer = null;
 
-  logo.addEventListener("click", () => {
-    const now = Date.now();
-    if (now - lastTap < 600) {
+  const startHold = () => {
+    holdTimer = setTimeout(() => {
+      holdTimer = null;
       forceUpdate();
+    }, 800);
+  };
+
+  const cancelHold = () => {
+    if (holdTimer) {
+      clearTimeout(holdTimer);
+      holdTimer = null;
     }
-    lastTap = now;
-  });
+  };
+
+  logo.addEventListener("pointerdown", startHold);
+  logo.addEventListener("pointerup", cancelHold);
+  logo.addEventListener("pointerleave", cancelHold);
+  logo.addEventListener("pointercancel", cancelHold);
+  logo.addEventListener("contextmenu", e => e.preventDefault());
 })();
