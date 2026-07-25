@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.90";
+const APP_VERSION = "v1.91";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -45,19 +45,34 @@ const taglineMessages = [
   "i chleba má svůj den slávy",
   "dobrá večeře stojí za zápis do historie",
   "gulášovka řeší úplně všechno",
-  "vím přesně, co jsi včera jedl"
+  "vím přesně, co jsi včera jedl",
+  "řekni mi, co jíš, řeknu ti, kdo jsi",
+  "ať je tvým lékem jídlo",
+  "sport nenahradí špatnou stravu",
+  "dieta začíná zítra",
+  "váha lže, věř jen kalhotám",
+  "kdo jí pomalu, jí dvakrát",
+  "nikdy nejez víc, než uneseš",
+  "hubnutí začíná v hlavě, končí v ledničce",
+  "jsi, co jíš",
+  "dokážu odolat všemu, kromě pokušení",
+  "jez, abys žil, nežij, abys jedl",
+  "život je krátký, dezert si dej",
+  "kdo se bojí kalorií, nikdy neochutná život"
 ];
 
-/* Vzory pro hlasky s realnym napadem z tveho seznamu jidel. */
+/* Vzory pro hlasky s realnym napadem z tveho seznamu jidel.
+   Jmeno jidla se vklada jen jako podmet/samostatny vyraz, nikdy
+   se na nej neváže rodovy tvar (pizza/gulas/rizoto maji ruzny rod). */
 const mealTaglineTemplates = [
-  "co třeba {meal}? bojíš se?",
+  "co třeba {meal}?",
   "{meal}. řekni to nahlas a jdi na to",
-  "znáš {meal}, tak si ho dej",
-  "{meal} tě volá, zvedni to",
+  "{meal} zní jako dobrý nápad",
   "{meal}, nebo nuda. vyber si",
-  "dal by sis {meal}? přiznej to",
-  "{meal} by ti dneska slušelo",
-  "tip ode mě: {meal}"
+  "{meal} tě volá, zvedni to",
+  "tip ode mě: {meal}",
+  "{meal}? proč ne",
+  "tvoje příští jídlo: {meal}"
 ];
 
 let savedMeals = [];
