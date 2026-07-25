@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.87";
+const APP_VERSION = "v1.88";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 
@@ -15,7 +15,7 @@ const AUTH_HEADERS = { "x-functions-key": FUNCTION_KEY };
 
 const taglineMessages = [
   "tvůj chytrý jídelníček",
-  "řekni mi, co jsi jedl/a, zapíšu to",
+  "řekni mi, co jsi jedl, zapíšu to",
   "zeptej se na nápad k obědu",
   "podrž logo pro vyčištění appky",
   "zelenina taky umí být drzá",
@@ -33,12 +33,13 @@ function startTaglineRotation() {
 
   let index = 0;
   taglineInterval = setInterval(() => {
-    index = (index + 1) % taglineMessages.length;
-    tagline.classList.remove("fade-in");
-    void tagline.offsetWidth;
-    tagline.textContent = taglineMessages[index];
-    tagline.classList.add("fade-in");
-  }, 5000);
+    tagline.style.opacity = "0";
+    setTimeout(() => {
+      index = (index + 1) % taglineMessages.length;
+      tagline.textContent = taglineMessages[index];
+      tagline.style.opacity = "";
+    }, 900);
+  }, 7000);
 }
 
 
