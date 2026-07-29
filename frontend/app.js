@@ -1,4 +1,4 @@
-const APP_VERSION = "v1.93";
+const APP_VERSION = "v1.94";
 
 const API_BASE = "https://elai-fce-d3esdvbtaygrdzap.westeurope-01.azurewebsites.net/api";
 

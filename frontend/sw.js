@@ -1,4 +1,4 @@
-const VERSION = "1.93";
+const VERSION = "1.94";
 const CACHE_NAME = `elai-shell-${VERSION}`;
 
 const SHELL_FILES = [

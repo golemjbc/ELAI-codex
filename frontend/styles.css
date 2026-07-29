@@ -325,6 +325,13 @@ body > .aurora-layer {
   padding: 12px 14px;
   font-size: 15px;
   font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#messageInput::-webkit-search-cancel-button,
+#messageInput::-webkit-search-decoration {
+  display: none;
 }
 
 #messageInput:focus {
