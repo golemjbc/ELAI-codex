@@ -2,6 +2,7 @@ import azure.functions as func
 import logging
 import os
 import json
+import urllib.request
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
 from azure.storage.blob import BlobServiceClient
@@ -14,6 +15,48 @@ CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME", "elai-kontejner")
 
 # OpenAI klient
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+
+# =========================
+# Pocasi (Pulecny, Rychnov u Jablonce nad Nisou)
+# =========================
+# Cachovano na cely den - nema smysl volat pri kazde zprave.
+
+WEATHER_LAT = 50.68263
+WEATHER_LON = 15.15124
+
+_weather_cache = {"date": None, "text": None}
+
+
+def get_weather_text():
+    today = datetime.now().strftime("%Y-%m-%d")
+    if _weather_cache["date"] == today and _weather_cache["text"]:
+        return _weather_cache["text"]
+
+    try:
+        url = (
+            "https://api.open-meteo.com/v1/forecast"
+            f"?latitude={WEATHER_LAT}&longitude={WEATHER_LON}"
+            "&daily=temperature_2m_max,precipitation_probability_max"
+            "&timezone=Europe%2FPrague&forecast_days=1"
+        )
+        with urllib.request.urlopen(url, timeout=5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+
+        max_temp = round(data["daily"]["temperature_2m_max"][0])
+        rain_chance = data["daily"]["precipitation_probability_max"][0]
+
+        text = (
+            f"Dnesni predpoved pocasi (Pulecny u Rychnova u Jablonce nad Nisou): "
+            f"nejvyssi teplota {max_temp} C, sance na dest {rain_chance} %."
+        )
+
+        _weather_cache["date"] = today
+        _weather_cache["text"] = text
+        return text
+    except Exception as e:
+        logging.warning(f"Nepodarilo se nacist predpoved pocasi: {e}")
+        return None
 
 @app.route(route="history", methods=["GET"], auth_level=func.AuthLevel.FUNCTION)
 def get_history(req: func.HttpRequest) -> func.HttpResponse:
@@ -168,16 +211,18 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
         # -------------------------
         # 2) NAČTENÍ DAT (souběžně, misto 4 cteni za sebou)
         # -------------------------
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=5) as executor:
             prompt_future = executor.submit(read_blob_text, "prompt.txt")
             main_future = executor.submit(read_json_blob, "main.json", {"meals": []})
             history_future = executor.submit(read_json_blob, "history.json", {"history": []})
             session_future = executor.submit(read_json_blob, "session.json", {"sessions": []})
+            weather_future = executor.submit(get_weather_text)
 
             prompt_text = prompt_future.result() or ""
             main_data = main_future.result()
             history_data = history_future.result()
             session_data = session_future.result()
+            weather_text = weather_future.result()
 
         # -------------------------
         # 3) SESSION LOGIKA
@@ -213,6 +258,9 @@ def chat(req: func.HttpRequest) -> func.HttpResponse:
                 )
             }
         ]
+
+        if weather_text:
+            messages.append({"role": "system", "content": "POCASI: " + weather_text})
 
         # posledních 15 zpráv
         messages.extend(todays_session["messages"][-15:])
