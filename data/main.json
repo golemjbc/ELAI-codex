@@ -156,9 +156,7 @@
         "těstoviny",
         "rychlé"
       ],
-      "notes": [
-        "Nepřihazovat — podobné Těstoviny aglio olio byly 2026-04-25."
-      ]
+      "notes": []
     },
     {
       "id": "testoviny",
@@ -719,6 +717,16 @@
       "id": "bunbo_nam_bo_podle_receptu_erik_haibazi",
       "name": "bunbo nam Bo podle receptu Erik haibazi",
       "tags": [],
+      "notes": []
+    },
+    {
+      "id": "sushi",
+      "name": "Sushi",
+      "tags": [
+        "ryba",
+        "asijské",
+        "lehké"
+      ],
       "notes": []
     }
   ]
